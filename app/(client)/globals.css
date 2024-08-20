@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+
+@layer base {
+
+
+  @font-face {
+    font-family: 'glacial_indifferencebold';
+    src: url('/fonts/glacialindifference-bold-webfont.woff2') format('woff2'),
+        url('/fonts/glacialindifference-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+      font-family: 'glacial_indifferenceitalic';
+      src: url('/fonts/glacialindifference-italic-webfont.woff2') format('woff2'),
+          url('/fonts/glacialindifference-italic-webfont.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+  }
+  @font-face {
+    font-family: 'glacial_indifferenceregular';
+    src: url('/fonts/glacialindifference-regular-webfont.woff2') format('woff2'),
+        url('/fonts/glacialindifference-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+
+h1, h2, h3 {
+  font-family: "glacial_indifferencebold", sans-serif;
+}
