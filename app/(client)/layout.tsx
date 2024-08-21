@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 import Header from '@/components/Header'
+import Tickets from "@/components/Tickets";
+import Connect from "@/components/Connect";
+import Footer from "@/components/Footer";
 
 
 export const metadata: Metadata = {
@@ -23,6 +26,9 @@ export default function RootLayout({
       <body className="bg-blue text-[1.6rem]">
         <Header />
         {children}
+        <Tickets />
+        <Connect />
+        <Footer />
       </body>
     </html>
   );

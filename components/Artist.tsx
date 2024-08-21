@@ -1,15 +1,11 @@
-'use client';
-
 import type { Artist } from "@/sanity.types";
-import { useState } from "react";
 import { FaSpotify } from "react-icons/fa";
 import MS from "./MS";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 
 export default function Artist({name, local, spotify, image}: Artist) {
-  const [hover, setHover] = useState(false);
-  const [transform, setTransform] = useState(0);
+  
   return (
     <li className="artist mx-auto relative overflow-hidden group">
       {image && (

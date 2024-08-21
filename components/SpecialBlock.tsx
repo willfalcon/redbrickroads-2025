@@ -11,10 +11,10 @@ type Props = {
   block: SpecialBlock
 }
 export default function SpecialBlock({block}: Props) {
-  
 
-  const blockWrapperRef: MutableRefObject<HTMLElement | null> = useRef(null);
-
+  if (block.heading === 'Craft Market') {
+    console.log(block)
+  }
   const viewport = useWindowSize();
 
   const isWideScreen = viewport.width && viewport.width > 768;
@@ -22,38 +22,55 @@ export default function SpecialBlock({block}: Props) {
   const imageColumnWidth = viewport.width && isWideScreen ? roundToNearest(viewport.width * 0.5, 100)  : viewport.width || 0;
   const imageWidth = imageColumnWidth >= 500 ? 500 : imageColumnWidth;
   const imageHeight = viewport.height && isWideScreen ? roundToNearest(viewport.height * 0.8, 50) : viewport.height || 0;
-  
+  const imgSrc = block.image ? isWideScreen ? urlFor(block.image).height(imageHeight).width(imageWidth).url() : urlFor(block.image).width(roundToNearest(viewport.width!, 100)).url() : null;
+
   return (
-    <section className="content-block h-screen flex py-[10vh]" ref={blockWrapperRef}>
-      <div 
-        className={classNames(`overflow-hidden relative flex-shrink-0`, {
-          'order-2': block.reverse
-        })} 
+    <section className="content-block mt-20 relative md:flex first:mt-0" id={block.slug?.current}>
+      <div
+        className={classNames(`overflow-hidden relative flex-shrink`, {
+          'order-2': block.reverse,
+        })}
         style={{
-          flexBasis: `${imageWidth}px`
+          flexBasis: `${imageWidth}px`,
         }}
       >
-        {block.image && (
+        {block.image && imgSrc && (
           <Image
             className="content-block__image object-cover"
-            src={urlFor(block.image).height(imageHeight).width(imageWidth).url()}
+            src={imgSrc}
             width={imageWidth}
             height={imageHeight}
             alt={block.image.alt || ''}
           />
         )}
       </div>
-      <div className={classNames(`content-wrapper py-[5rem] px-4 flex-1 relative`, {
-        'order-1': block.reverse, 
-        'ml-4': !block.reverse, 
-        'mr-4': block.reverse
-      })}>
-        {block.backgroundPattern && (
-          <BGPattern reverse={block.reverse || false} />
-        )}
-        <div className="content-block__content flex flex-col justify-center h-full w-[65%] max-w-full mx-auto items-start relative z-10">
-          <h2 className="content-block__heading text-orange text-[6rem] uppercase">{block.heading}</h2>
-          {block.copy && <p className="content-block__body mb-16" dangerouslySetInnerHTML={{ __html: block.copy }} />}
+      <div
+        className={classNames(`content-wrapper py-20 px-4 mx-auto md:flex-1 md:w-[300px] relative`, {
+          'order-1': block.reverse,
+          'md:ml-4': !block.reverse,
+          'md:mr-4': block.reverse,
+          'md:text-right': block.reverse,
+        })}
+      >
+        {block.backgroundPattern && <BGPattern reverse={block.reverse} />}
+        <div
+          className={classNames(
+            'content-block__content md:flex flex-col justify-center md:h-full md:w-[65%] max-w-full mx-auto relative z-10',
+            {
+              'items-start': !block.reverse,
+              'items-end': block.reverse,
+            }
+          )}
+        >
+          <h2
+            className={classNames('content-block__heading text-orange text-[3rem] md:text-[6rem] uppercase', {
+              'text-orange': !block.reverse,
+              'text-red': block.reverse,
+            })}
+          >
+            {block.heading}
+          </h2>
+          {block.copy && <p className="content-block__body !mb-16" dangerouslySetInnerHTML={{ __html: block.copy }} />}
           {block.link && (
             <Button className="content-block__link" href={block.link.url}>
               {block.link.label || ''}

@@ -14,6 +14,7 @@ const config: Config = {
       decoOrange: '#F3DFAE',
       decoYellow: '#EEF1D1',
       decoPink: '#EEDDD1',
+      link: '#0060df',
     },
     fontFamily: {
       sans: ['open-sans', 'sans-serif'],
@@ -24,9 +25,12 @@ const config: Config = {
     },
     extend: {
       width: {
-        content: '800px'
-      }
-    }
+        content: '800px',
+      },
+      backgroundImage: {
+        'string-lights': "url('/elements-string-light.png')",
+      },
+    },
   },
   plugins: [],
 };

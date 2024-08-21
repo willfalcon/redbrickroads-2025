@@ -1130,6 +1130,35 @@ export type HEADER_QUERYResult = {
     } | null;
   }> | null;
 } | null;
+// Variable: MAIN_NAV_QUERY
+// Query: *[_type == 'siteSettings'][0].mainMenu[] {    ...,    link-> {      title, slug    },    subMenu[] {      ...,      link -> {        title, slug      }    }  }
+export type MAIN_NAV_QUERYResult = Array<{
+  _key: string;
+  _type: "menuItem";
+  label?: string;
+  link: {
+    title: string | null;
+    slug: Slug | null;
+  } | null;
+  anchor?: string;
+  externalUrl?: string;
+  subMenu: Array<{
+    _key: string;
+    _type: "menuItem";
+    label?: string;
+    link: {
+      title: string | null;
+      slug: Slug | null;
+    } | null;
+    anchor?: string;
+    externalUrl?: string;
+    subMenu?: Array<{
+      _key: string;
+    } & MenuItem>;
+    buttonStyles?: boolean;
+  }> | null;
+  buttonStyles?: boolean;
+}> | null;
 // Variable: HOME_QUERY
 // Query: *[_type == "home"][0] {    hero {      _type,      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {        ...,        asset-> {          ...,        }      }    },    content[]  }
 export type HOME_QUERYResult = {
@@ -1392,9 +1421,9 @@ export type SCHEDULES_QUERYResult = Array<{
   _key: string;
 } & Schedule> | null;
 // Variable: ARTISTS_QUERY
-// Query: *[_type == 'artist'][] {    id,    name,    local,    spotify,    image  }
+// Query: *[_type == 'artist'][] {    _id,    name,    local,    spotify,    image  }
 export type ARTISTS_QUERYResult = Array<{
-  id: null;
+  _id: string;
   name: string | null;
   local: boolean | null;
   spotify: string | null;
@@ -1411,4 +1440,304 @@ export type ARTISTS_QUERYResult = Array<{
     _type: "altImage";
   } | null;
 }>;
+// Variable: INFO_QUERY
+// Query: *[_type == 'infoPage'][0] {    title,    content  }
+export type INFO_QUERYResult = {
+  title: string | null;
+  content: BlockContent | null;
+} | null;
+// Variable: FAQS_QUERY
+// Query: *[_type == 'faq'][] {    ...,    answer[] {      ...,      markDefs[] {        ...,        'slug': url->slug.current      }    }  }
+export type FAQS_QUERYResult = Array<{
+  _id: string;
+  _type: "faq";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  question?: string;
+  slug?: Slug;
+  answer: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+      slug: string | null;
+    }> | null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+}>;
+// Variable: TICKETS_QUERY
+// Query: *[_type == 'tickets'][0] {    heading,    text,    ticketOptions[] {      _id,      title,      buyText,      description[],      image,      price    }  }
+export type TICKETS_QUERYResult = {
+  heading: string | null;
+  text: Array<({
+    _key: string;
+  } & MerchBlock) | ({
+    _key: string;
+  } & SpecialBlock) | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "form";
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "altImage";
+    _key: string;
+  } | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      _type: "file";
+      _key: string;
+    } | {
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  ticketOptions: Array<{
+    _id: null;
+    title: string | null;
+    buyText: string | null;
+    description: Array<({
+      _key: string;
+    } & MerchBlock) | ({
+      _key: string;
+    } & SpecialBlock) | {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "form";
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "altImage";
+      _key: string;
+    } | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+      listItem?: "bullet";
+      markDefs?: Array<{
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+        };
+        _type: "file";
+        _key: string;
+      } | {
+        externalUrl?: string;
+        url?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "home";
+        } | {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "infoPage";
+        } | {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "lineupPage";
+        } | {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "page";
+        };
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }> | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "altImage";
+    } | null;
+    price: string | null;
+  }> | null;
+} | null;
+// Variable: CONNECT_QUERY
+// Query: {    "contact": *[_type == 'siteSettings'][0].contact {      phone,      social,    },    "connect": *[_type == 'connect'][0] {      heading,      text,      slug,      menu[] {        ...,        link-> {          title, slug        }      }    }  }
+export type CONNECT_QUERYResult = {
+  contact: {
+    phone: string | null;
+    social: Social | null;
+  } | null;
+  connect: {
+    heading: string | null;
+    text: string | null;
+    slug: Slug | null;
+    menu: Array<{
+      _key: string;
+      _type: "menuItem";
+      label?: string;
+      link: {
+        title: string | null;
+        slug: Slug | null;
+      } | null;
+      anchor?: string;
+      externalUrl?: string;
+      subMenu?: Array<{
+        _key: string;
+      } & MenuItem>;
+      buttonStyles?: boolean;
+    }> | null;
+  } | null;
+};
+// Variable: FOOTER_QUERY
+// Query: *[_type == 'footerSettings'][0] {    footerLogos[] {      ...,       _key    },    sponsor  }
+export type FOOTER_QUERYResult = {
+  footerLogos: Array<{
+    _key: string;
+    _type: "footerLogo";
+    label?: string;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "altImage";
+    };
+    link?: string;
+  }> | null;
+  sponsor: FooterSponsor | null;
+} | null;
+// Variable: FOOTER_NAV_QUERY
+// Query: *[_type == 'footerSettings'][0].footerNav[] {    ...,    link-> {      title, slug    },    subMenu[] {      ...,      link -> {        title, slug      }    }  }
+export type FOOTER_NAV_QUERYResult = Array<{
+  _key: string;
+  _type: "menuItem";
+  label?: string;
+  link: {
+    title: string | null;
+    slug: Slug | null;
+  } | null;
+  anchor?: string;
+  externalUrl?: string;
+  subMenu: Array<{
+    _key: string;
+    _type: "menuItem";
+    label?: string;
+    link: {
+      title: string | null;
+      slug: Slug | null;
+    } | null;
+    anchor?: string;
+    externalUrl?: string;
+    subMenu?: Array<{
+      _key: string;
+    } & MenuItem>;
+    buttonStyles?: boolean;
+  }> | null;
+  buttonStyles?: boolean;
+}> | null;
 

@@ -18,45 +18,45 @@ import Link from "next/link";
 
 import type { ItemProps } from "./Nav";
 
-export default function NavItem(props: ItemProps & {link: { slug: {current: string} }}) {
+export default function NavItem(props: ItemProps) {
   
-  const {  label, link, buttonStyles, anchor, externalUrl, subMenu } = props;
+  const { label, link, buttonStyles, anchor, externalUrl, subMenu, className, subMenuClasses } = props;
   
-  let classes = classNames('font-extrabold text-[2rem] uppercase text-red');
+  let classes = 'font-extrabold text-[2rem] uppercase text-red cursor-pointer';
   if (buttonStyles) {
     classes += ' bg-orange text-white py-3 px-12';
   }
   if (link && anchor) {
-    return <Link className={classes} href={`/${link.slug.current}#${anchor}`}>{label}</Link>;
+    return <Link className={classNames(classes, className)} href={`/${link.slug.current}#${anchor}`}>{label}</Link>;
   }
   if (link) {
     return (
-      <Link className={classes} href={`/${link.slug.current}`}>
+      <Link className={classNames(classes, className)} href={`/${link.slug.current}`}>
         {label}
       </Link>
     );
   }
   if (anchor) {
     return (
-      <Link className={classes} href={`#${anchor}`}>
+      <Link className={classNames(classes, className)} href={`#${anchor}`}>
         {label}
       </Link>
     );
   }
   if (externalUrl) {
     return (
-      <a className={classes} href={`#${anchor}`} target="_blank" rel="nofollow">
+      <a className={classNames(classes, className)} href={`#${anchor}`} target="_blank" rel="nofollow">
         {label}
       </a>
     );
   }
   if (subMenu) {
     return (
-      <span>
-        {label}
+      <span className="mx-4">
+        <span className={classNames(classes, className, 'mx-0')}>{label}</span>
         <ul className="sub-menu">
           {subMenu.map((item: ItemProps) => (
-            <NavItem key={item._key} {...item} />
+            <NavItem className={subMenuClasses} key={item._key} {...item} />
           ))}
         </ul>
       </span>
