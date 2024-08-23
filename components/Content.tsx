@@ -1,16 +1,22 @@
-'use client';
-
 import classNames from "classnames";
 import { PortableText, PortableTextReactComponents } from "next-sanity";
 import { TypedObject } from "sanity";
 import SpecialBlock from "./SpecialBlock";
 import './Content.css';
 import Link from "next/link";
+import Form from "./forms/Form";
+import Reference from "./Reference";
+import { SpecialBlock as SpecialBlockType } from "@/sanity.types";
 
 const components = {
   types: {
-    specialBlock: ({ value }) => {
+    specialBlock: ({ value }: { value: SpecialBlockType }) => {
       return <SpecialBlock block={value} />;
+    },
+    reference: ({ value }: { value: { _ref: string } }) => {
+      // console.log(value)
+
+      return <Reference {...value} />;
     },
   },
   marks: {
@@ -25,19 +31,26 @@ const components = {
         );
       }
       if (url) {
-        return <Link className="text-link underline" href={`/${slug}`}>{children}</Link>
+        return (
+          <Link className="text-link underline" href={`/${slug}`}>
+            {children}
+          </Link>
+        );
       }
       return <span>{children}</span>;
     },
+    file: () => {
+      return <span></span>;
+    },
   },
   list: {
-    bullet: ({children}) => <ul className="list-disc pl-8">{children}</ul>,
-    number: ({children}) => <ol className="list-decimal pl-8">{children}</ol>
+    bullet: ({ children }) => <ul className="list-disc pl-8">{children}</ul>,
+    number: ({ children }) => <ol className="list-decimal pl-8">{children}</ol>,
   },
   listItem: {
-    bullet: ({children}) => <li className="my-2">{children}</li>,
-    number: ({children}) => <li className="my-2">{children}</li>
-  }
+    bullet: ({ children }) => <li className="my-2">{children}</li>,
+    number: ({ children }) => <li className="my-2">{children}</li>,
+  },
 };
 
 type props = {
@@ -46,7 +59,7 @@ type props = {
 };
 
 export default function Content({children, className}: props) {
-  
+ 
   return (
     <div className={(classNames('block-content', className))}>
       {children && (

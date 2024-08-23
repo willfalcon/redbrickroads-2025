@@ -194,3 +194,9 @@ export const FOOTER_NAV_QUERY = groq`
     }
   } 
 `
+
+export const REFERENCE_QUERY = groq`
+  *[_id == $ref][0] {
+    ...
+  }
+`

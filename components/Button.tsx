@@ -8,9 +8,10 @@ type Props = {
   href?: string | null,
   id?: string,
   target?: string,
-  rel?: string
+  rel?: string,
+  type: string
 }
-export default function Button({className, children, href, target, rel}: Props) {
+export default function Button({className, children, href, target, rel, type}: Props) {
   const classes = 'bg-orange text-white py-4 px-12 uppercase font-bold';
   if (target == "_blank" && href) {
     return <a className={classNames(className, classes)} href={href} target={target} rel={rel || ''}>{children}</a>
@@ -21,6 +22,9 @@ export default function Button({className, children, href, target, rel}: Props) 
         {children}
       </Link>
     )
+  }
+  if (type == 'submit') {
+    <input type="submit" className={classNames(className, classes)} value={children!} />
   }
   return <span className={classNames(className, classes)}>{children}</span>
 }

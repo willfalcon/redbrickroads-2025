@@ -4,6 +4,7 @@ const config: Config = {
   content: ['./pages/**/*.{js,ts,jsx,tsx,mdx}', './components/**/*.{js,ts,jsx,tsx,mdx}', './app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     colors: {
+      transparent: 'transparent',
       blue: '#cbf1f1',
       red: '#c72030',
       orange: '#ff914d',

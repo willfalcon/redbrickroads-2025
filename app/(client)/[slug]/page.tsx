@@ -12,6 +12,7 @@ export default async function Page({params} : { params: { slug: string }}) {
   if (!pageData) {
     return <ErrorPage />
   }
+  
   return (
     <>
       {pageData.hero && <Hero {...pageData.hero} hasSubNav={pageData.subNav} />}
