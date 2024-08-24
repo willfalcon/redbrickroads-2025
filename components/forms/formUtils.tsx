@@ -38,33 +38,60 @@ export function useFocusState(type = 'default') {
 // }
 
 
-interface FieldWrapperProps extends PropsWithChildren  {
+type FieldWrapperProps = PropsWithChildren & {
   options?: FieldOptions,
-  name: string,
 }
 
-export function FieldWrapper({ name, options, children }: FieldWrapperProps) {
-  const required = options && options.required ? options.required : false;
+export function FieldWrapper({ options, children }: FieldWrapperProps) {
   const halfWidth = options && options.halfWidth ? options.halfWidth : false;
   return (
     <div
       className={classNames('w-full h-full relative', {
         'col-span-1': halfWidth,
         'col-span-2': !halfWidth,
+
       })}
     >
-      <label
-        className={classNames('w-full relative transition-all block border-2 border-orange', {
-          'col-span-1': halfWidth,
-          'col-span-2': !halfWidth,
-        })}
-      >
-        <span className="label-text absolute top-1/2 left-4 transition-all -translate-y-1/2 text-[1.6rem] pointer-events-none">
-          {name}
-          {required && '*'}
-        </span>
-        {children}
-      </label>
+      {children}
     </div>
+  );
+}
+
+type LabelProps = PropsWithChildren & {
+  className?: string,
+  options?: FieldOptions,
+  name: string,
+  focused: boolean,
+  htmlFor?: string
+}
+export function Label({className, options, name, children, focused, htmlFor } : LabelProps) {
+  const halfWidth = options && options.halfWidth ? options.halfWidth : false;
+  const required = options && options.required ? options.required : false;
+  const fieldName = options && options.adminLabel ? options.adminLabel : name;
+  return (
+    <label
+      className={classNames(className, 'w-full relative transition-all block border-orange', {
+        'col-span-1': halfWidth,
+        'col-span-2': !halfWidth,
+        'border-4': focused,
+        'border-2': !focused,
+        'my-0': focused,
+        'my-[2px]': !focused,
+        // 'translate-y-[-2px]': focused,
+        // 'translate-y-0': !focused
+      })}
+      htmlFor={htmlFor || undefined}
+    >
+      <span className={classNames("label-text absolute top-1/2 left-4 transition-all text-[1.6rem] pointer-events-none", {
+        '-translate-y-1/2': !focused,
+        'translate-y-[-140%]': focused,
+        'text-[1.6rem]': !focused,
+        'text-[1.2rem]': focused
+      })}>
+        {name}
+        {required && '*'}
+      </span>
+      {children}
+    </label>
   );
 }

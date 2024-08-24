@@ -1,5 +1,5 @@
 import type { PhoneField } from "@/sanity.types";
-import { useFocusState } from "./formUtils";
+import { FieldWrapper, Label, useFocusState } from "./formUtils";
 
 export default function PhoneField({name, fieldOptions}: PhoneField) {
   const required =
@@ -14,14 +14,16 @@ export default function PhoneField({name, fieldOptions}: PhoneField) {
   const { focused, handleFocus, handleBlur } = useFocusState();
 
   return (
-    <div>
-      <label>
-        <span className="label-text">
-          {name}
-          {required && '*'}
-        </span>
-        <input className="text-input" type="tel" name={fieldName} onFocus={handleFocus} onBlur={handleBlur} />
-      </label>
-    </div>
+    <FieldWrapper options={fieldOptions}>
+      <Label options={fieldOptions} name={name!} focused={focused}>
+        <input
+          className="text-input bg-transparent border-0 w-full p-4 mb-0 mt-4 text-black focus:outline-0"
+          type="tel"
+          name={fieldName}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+        />
+      </Label>
+    </FieldWrapper>
   );
 }

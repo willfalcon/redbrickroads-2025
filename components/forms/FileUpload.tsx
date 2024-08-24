@@ -1,5 +1,5 @@
 import type { FileUpload } from "@/sanity.types";
-import { useFocusState } from "./formUtils";
+import { FieldWrapper, Label, useFocusState } from "./formUtils";
 import { ChangeEvent, useState } from "react";
 
 export default function FileUpload({name, fieldOptions}: FileUpload) {
@@ -25,22 +25,24 @@ export default function FileUpload({name, fieldOptions}: FileUpload) {
   };
 
   return (
-    <div>
-      <label>
-        <span className="label-text label-text--file">
-          {name}
-          {required && '*'}
-        </span>
+    <FieldWrapper options={fieldOptions}>
+      <Label className="h-[64px]" options={fieldOptions} name={name!} focused={focused} htmlFor={fieldName}>
         <input
-          className="file-input"
+          className="absolute opacity-0 top-0 right-0 bottom-0 left-0 cursor-pointer"
           type="file"
           name={fieldName}
+          id={fieldName}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
         />
-      </label>
-    </div>
+        {fileName && <span className="file-name absolute top-1/2 -translate-y-1/2 left-2">{fileName}</span>}
+        <span className="absolute h-full right-0 top-0 flex items-center bg-orange text-white px-4 text-center pointer-events-none">
+          Browse
+        </span>
+      </Label>
+      {description && <p className="field-description">{description}</p>}
+    </FieldWrapper>
   );
 
 }

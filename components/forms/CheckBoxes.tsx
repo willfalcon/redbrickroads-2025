@@ -1,5 +1,6 @@
 import type { CheckBoxes } from "@/sanity.types";
 import { useState } from "react";
+import { FieldWrapper, Label } from "./formUtils";
 
 
 export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
@@ -24,28 +25,27 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
   };
 
   return (
-    <div>
-      <label>
-        <span className="label-text">
-          {name}
-          {required && '*'}
-        </span>
+    <FieldWrapper options={fieldOptions}>
+      <Label className="p-4 *:static" name={name!} options={fieldOptions} focused={false}>
         <div>
           {options?.map((option, i) => (
-            <span className="checkbox-wrapper" key={option} onClick={() => toggleChecked(i)}>
+            <span className="block cursor-pointer relative" key={option} onClick={() => toggleChecked(i)}>
               <input
                 onChange={() => toggleChecked(i)}
-                className="checkbox"
+                className="peer absolute top-auto overflow-hidden w-[1px] h-[1px] whitespace-nowrap focus:underline decoration-orange"
+                style={{ clip: 'rect(1px, 1px, 1px, 1px)' }}
                 type="checkbox"
                 checked={checked.includes(i)}
                 name={fieldName}
                 value={option}
               />
-              <span className="checkbox-option-label">{option}</span>
+              <span className="bg-transparent border border-orange block w-[1.2rem] h-[1.2rem] rounded absolute left-0 top-1/2 -translate-y-1/2 peer-checked:bg-orange" />
+              <span className="block text-[1.4rem] p-2 pl-8 relative">{option}</span>
             </span>
           ))}
         </div>
-      </label>
-    </div>
+        {description && <p className="field-description">{description}</p>}
+      </Label>
+    </FieldWrapper>
   );
 }

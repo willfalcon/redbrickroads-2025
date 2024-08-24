@@ -1,5 +1,8 @@
 import type { AddressField } from "@/sanity.types";
 import TextField from "./TextField";
+import SelectField from "./SelectField";
+import classNames from "classnames";
+import states from "./states";
 
 export default function AddressField({name, fieldOptions}: AddressField) {
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
@@ -9,8 +12,11 @@ export default function AddressField({name, fieldOptions}: AddressField) {
   const fieldName = adminLabel ? adminLabel : name;
 
   return (
-    <div>
-      <span className="label-text complex-field-label">
+    <div className={classNames('w-full h-full relative grid grid-cols-2 gap-4', {
+        'col-span-1': halfWidth,
+        'col-span-2': !halfWidth,
+      })}>
+      <span className="label-text complex-field-label col-span-2">
         {name}
         {required && '*'}
       </span>
@@ -29,15 +35,16 @@ export default function AddressField({name, fieldOptions}: AddressField) {
         fieldOptions={{ halfWidth: true, adminLabel: `${fieldName} - City`, _type: 'fieldOptions' }}
         _type="textField"
       />
-      {/* <SelectField
+      <SelectField
         name={`State`}
         fieldOptions={{
           halfWidth: true,
           adminLabel: `${fieldName} - State`,
+          _type: 'fieldOptions'
         }}
         options={states}
-        // register={register}
-      /> */}
+        _type="selectField"
+      />
       <TextField
         name={`Zip`}
         fieldOptions={{ halfWidth: true, adminLabel: `${fieldName} - Zip`, _type: 'fieldOptions' }}
