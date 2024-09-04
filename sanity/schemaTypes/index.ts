@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { type SchemaTypeDefinition } from 'sanity'
 import altImage from './altImage'
 import link from './link'

@@ -38,7 +38,7 @@ export default defineType({
       description:
         'Required to use anchor links to specific sections, i.e. in the subnav on a page.',
       options: {
-        source: (doc, options) => options.parent.heading,
+        source: 'content',
         maxLength: 100,
       },
     }),

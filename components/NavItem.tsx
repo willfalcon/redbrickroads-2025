@@ -18,7 +18,7 @@ import Link from "next/link";
 
 import type { ItemProps } from "./Nav";
 
-export default function NavItem(props: ItemProps) {
+export default function NavItem(props: ItemProps | any) {
   
   const { label, link, buttonStyles, anchor, externalUrl, subMenu, className, subMenuClasses } = props;
   

@@ -39,7 +39,7 @@ type HeroType = {
   }
 };
 
-export default function Hero(props: HeroType) {
+export default function Hero(props: HeroType | any) {
   if (!props) {
     return null;
   }

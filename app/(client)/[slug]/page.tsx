@@ -16,7 +16,7 @@ export default async function Page({params} : { params: { slug: string }}) {
   
   return (
     <>
-      {pageData.hero && <Hero {...pageData.hero} hasSubNav={pageData.subNav} />}
+      {pageData.hero && <Hero {...pageData.hero} hasSubNav={!!pageData.subNav} />}
       {pageData.subNav && <SubNav nav={pageData.subNav} />}
       {pageData.content && <Content className="p-4">{pageData.content}</Content>}
     </>
