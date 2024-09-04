@@ -1,3 +1,5 @@
+'use client';
+
 import type { SpecialBlock } from "@/sanity.types";
 import { MutableRefObject, useRef } from "react";
 import Image from "next/image";
@@ -25,7 +27,7 @@ export default function SpecialBlock({block}: Props) {
   const imgSrc = block.image ? isWideScreen ? urlFor(block.image).height(imageHeight).width(imageWidth).url() : urlFor(block.image).width(roundToNearest(viewport.width!, 100)).url() : null;
 
   return (
-    <section className="content-block mt-20 relative md:flex first:mt-0" id={block.slug?.current}>
+    <section className="content-block mt-20 relative md:flex first:mt-0 !w-full" id={block.slug?.current}>
       <div
         className={classNames(`overflow-hidden relative flex-shrink`, {
           'order-2': block.reverse,

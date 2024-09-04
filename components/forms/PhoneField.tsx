@@ -1,5 +1,6 @@
 import type { PhoneField } from "@/sanity.types";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
+import { useFormContext } from "react-hook-form";
 
 export default function PhoneField({name, fieldOptions}: PhoneField) {
   const required =
@@ -12,7 +13,9 @@ export default function PhoneField({name, fieldOptions}: PhoneField) {
     fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
   const fieldName = adminLabel ? adminLabel : name;
   const { focused, handleFocus, handleBlur } = useFocusState();
-
+  const { register, formState: {errors} } = useFormContext();
+  const { ref, onChange } = register(fieldName!, { required });
+  const error = errors[fieldName!];
   return (
     <FieldWrapper options={fieldOptions}>
       <Label options={fieldOptions} name={name!} focused={focused}>
@@ -22,8 +25,12 @@ export default function PhoneField({name, fieldOptions}: PhoneField) {
           name={fieldName}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          ref={ref}
+          onChange={onChange}
         />
       </Label>
+      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
+      {description && <p className="field-description">{description}</p>}
     </FieldWrapper>
   );
 }

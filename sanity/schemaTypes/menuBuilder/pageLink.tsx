@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 
 // import sanityClient from '@sanity/client';
 import {client} from '../../lib/client';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 // import PatchEvent, { set, unset } from 'part:@sanity/form-builder/patch-event';
 
 // const createPatch = value =>
@@ -58,33 +59,33 @@ const AnchorLink = React.forwardRef((props, ref) => {
   );
 });
 
-export default {
+export default defineType({
   name: 'pageLink',
   title: 'Page Link',
   type: 'object',
   fields: [
-    {
+    defineField({
       name: 'link',
       title: 'Link',
       type: 'reference',
       to: [{ type: 'page' }, { type: 'home' }, { type: 'lineupPage' }],
-    },
-    {
+    }),
+    defineField({
       name: 'anchor',
       title: 'Anchor Link',
       type: 'string',
-      inputComponent: AnchorLink,
-    },
-    {
+      // inputComponent: AnchorLink,
+    }),
+    defineField({
       name: 'externalUrl',
       title: 'External Url',
       type: 'url',
-    },
-    {
+    }),
+    defineField({
       name: 'subMenu',
       title: 'Sub Menu',
       type: 'array',
-      of: [{ type: 'pageLink' }],
-    },
+      of: [defineArrayMember({ type: 'pageLink' })],
+    }),
   ],
-};
+});

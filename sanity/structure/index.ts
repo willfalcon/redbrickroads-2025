@@ -1,7 +1,8 @@
 import type {ListItemBuilder, StructureResolver} from 'sanity/structure'
 
-import settings from './structure/settings';
-import pages from './structure/pages';
+import settings from './settings';
+import pages from './pages';
+import forms from './forms';
 
 const hiddenDocTypes = (listItem: ListItemBuilder) =>
   ![
@@ -13,6 +14,8 @@ const hiddenDocTypes = (listItem: ListItemBuilder) =>
     'lineupPage',
     'infoPage',
     // 'page',
+    'form',
+    'entry'
   ].includes(listItem.getId()!);
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -23,5 +26,6 @@ export const structure: StructureResolver = S =>
       settings(S), 
       S.divider(),
       pages(S),
+      forms(S),
       ...S.documentTypeListItems().filter(hiddenDocTypes)
     ]);

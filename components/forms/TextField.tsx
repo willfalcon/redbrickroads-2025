@@ -1,6 +1,8 @@
 import type { EmailField, TextField } from "@/sanity.types";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
 import classNames from "classnames";
+import { useFormContext } from "react-hook-form";
+
 
 export default function TextField({ name, fieldOptions, _type }: TextField | EmailField) {
 
@@ -10,7 +12,13 @@ export default function TextField({ name, fieldOptions, _type }: TextField | Ema
   const fieldName = adminLabel ? adminLabel : name;
 
   const { focused, handleFocus, handleBlur } = useFocusState();
+  
+  const { register, formState: {errors} } = useFormContext();
+  const error = errors[fieldName!];
 
+  const { ref, onChange } = register(fieldName!, { required });
+
+  
   return (
     <FieldWrapper options={fieldOptions}>
       <Label name={name!} options={fieldOptions} focused={focused} htmlFor={fieldName}>
@@ -19,10 +27,15 @@ export default function TextField({ name, fieldOptions, _type }: TextField | Ema
           type={_type === 'emailField' ? 'email' : 'text'}
           name={fieldName}
           id={fieldName}
+          onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          ref={ref}
         />
       </Label>
+      {error?.type === 'required' && (
+        <p className="text-error">{fieldName || 'This field'} is required!</p>
+      )}
       {description && <p className="field-description">{description}</p>}
     </FieldWrapper>
   );

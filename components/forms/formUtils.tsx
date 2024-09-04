@@ -1,6 +1,7 @@
 import { FieldOptions } from "@/sanity.types";
 import classNames from "classnames";
-import { createContext, FocusEvent, PropsWithChildren, useContext, useState } from "react";
+import { FocusEvent, PropsWithChildren, useState } from "react";
+import { Control, FieldValues, UseFormRegister } from "react-hook-form";
 
 export function useFocusState(type = 'default') {
   const [focused, setFocus] = useState(false);
@@ -8,7 +9,7 @@ export function useFocusState(type = 'default') {
     setFocus(true);
   };
   const handleBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    console.log(e);
+    
     if (type === 'date') {
       if (e.target.tagName === 'INPUT') {
         if (!e.target.value) {
@@ -24,18 +25,6 @@ export function useFocusState(type = 'default') {
   return {focused, handleFocus, handleBlur, setFocus};
 }
 
-// const FormContext = createContext({});
-
-// export function FormContextProvider({ value, children }) {
-//   // console.log({ values: value.control.getValues() });
-//   return (
-//     <FormContext.Provider value={{ ...value }}>{children}</FormContext.Provider>
-//   );
-// };
-
-// export function useFormContext() {
-//   return useContext(FormContext);
-// }
 
 
 type FieldWrapperProps = PropsWithChildren & {
@@ -67,7 +56,6 @@ type LabelProps = PropsWithChildren & {
 export function Label({className, options, name, children, focused, htmlFor } : LabelProps) {
   const halfWidth = options && options.halfWidth ? options.halfWidth : false;
   const required = options && options.required ? options.required : false;
-  const fieldName = options && options.adminLabel ? options.adminLabel : name;
   return (
     <label
       className={classNames(className, 'w-full relative transition-all block border-orange', {
@@ -77,12 +65,10 @@ export function Label({className, options, name, children, focused, htmlFor } : 
         'border-2': !focused,
         'my-0': focused,
         'my-[2px]': !focused,
-        // 'translate-y-[-2px]': focused,
-        // 'translate-y-0': !focused
       })}
       htmlFor={htmlFor || undefined}
     >
-      <span className={classNames("label-text absolute top-1/2 left-4 transition-all text-[1.6rem] pointer-events-none", {
+      <span className={classNames("label-text absolute top-1/2 left-4 transition-all pointer-events-none", {
         '-translate-y-1/2': !focused,
         'translate-y-[-140%]': focused,
         'text-[1.6rem]': !focused,

@@ -1,6 +1,7 @@
 import type { FileUpload } from "@/sanity.types";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
 import { ChangeEvent, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 export default function FileUpload({name, fieldOptions}: FileUpload) {
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
@@ -11,7 +12,9 @@ export default function FileUpload({name, fieldOptions}: FileUpload) {
 
   const { focused, handleFocus, handleBlur, setFocus } = useFocusState();
   const [fileName, setFileName] = useState<string>('');
-
+  const { register, setValue, formState: {errors} } = useFormContext();
+  const error = errors[fieldName!];
+  
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const filePath = e.target.value;
     // console.log(e.target.files);
@@ -23,6 +26,8 @@ export default function FileUpload({name, fieldOptions}: FileUpload) {
       setFileName(file);
     }
   };
+  const { ref, onChange } = register(fieldName!, { required, onChange: handleChange });
+
 
   return (
     <FieldWrapper options={fieldOptions}>
@@ -34,13 +39,15 @@ export default function FileUpload({name, fieldOptions}: FileUpload) {
           id={fieldName}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onChange={handleChange}
+          onChange={onChange}
+          ref={ref}
         />
         {fileName && <span className="file-name absolute top-1/2 -translate-y-1/2 left-2">{fileName}</span>}
         <span className="absolute h-full right-0 top-0 flex items-center bg-orange text-white px-4 text-center pointer-events-none">
           Browse
         </span>
       </Label>
+      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
       {description && <p className="field-description">{description}</p>}
     </FieldWrapper>
   );

@@ -124,13 +124,31 @@ export const INFO_QUERY = groq`
 
 export const FAQS_QUERY = groq`
   *[_type == 'faq'][] {
-    ...,
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    _rev,
+    question,
+    slug,
     answer[] {
-      ...,
+      children[] {
+        marks,
+        text,
+        _type,
+        _key
+      },
+      style,
+      listItem, 
       markDefs[] {
-        ...,
-        'slug': url->slug.current
-      }
+        externalUrl,
+        url,
+        _type,
+        _key
+      },
+      level,
+      _type,
+      _key
     }
   }
 `
@@ -140,7 +158,7 @@ export const TICKETS_QUERY = groq`
     heading,
     text,
     ticketOptions[] {
-      _id,
+      _key,
       title,
       buyText,
       description[],
@@ -197,6 +215,12 @@ export const FOOTER_NAV_QUERY = groq`
 
 export const REFERENCE_QUERY = groq`
   *[_id == $ref][0] {
+    ...
+  }
+`
+
+export const POPUPS_QUERY = groq`
+  *[_type == 'popup'][] {
     ...
   }
 `

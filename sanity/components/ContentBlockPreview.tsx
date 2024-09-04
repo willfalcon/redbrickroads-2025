@@ -15,9 +15,7 @@ function imageBuilder(source) {
   return builder.image(source);
 }
 
-const ContentBlockPreview = ({ value }) => {
-  const { title, text, media, reverse = false, buttonText } = value;
-
+const ContentBlockPreview = ({ title, text, media, reverse = false, buttonText }) => {
   const imageSrc = imageBuilder(media).url();
   const img = document.createElement('img');
   img.src = imageSrc;
@@ -38,11 +36,7 @@ const ContentBlockPreview = ({ value }) => {
   const [contentRef, contentSize] = useElementSize();
   const [wrapperRef, wrapperSize] = useElementSize();
   return (
-    <BlockWrapper
-      reverse={reverse}
-      ref={wrapperRef}
-      wrapperWidth={wrapperSize.width}
-    >
+    <BlockWrapper reverse={reverse} ref={wrapperRef} wrapperWidth={wrapperSize.width}>
       <CroppedImage
         containerWidth={wrapperSize.width / 3}
         wrapperHeight={contentSize.height}
@@ -59,13 +53,8 @@ const ContentBlockPreview = ({ value }) => {
       >
         <div className="content-block__content">
           <h2 className="content-block__heading">{title}</h2>
-          <p
-            className="content-block__body"
-            dangerouslySetInnerHTML={{ __html: text }}
-          />
-          {buttonText && (
-            <Button className="content-block__link">{buttonText}</Button>
-          )}
+          <p className="content-block__body" dangerouslySetInnerHTML={{ __html: text }} />
+          {buttonText && <Button className="content-block__link">{buttonText}</Button>}
         </div>
       </ContentWrapper>
     </BlockWrapper>

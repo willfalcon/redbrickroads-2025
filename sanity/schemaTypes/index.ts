@@ -39,6 +39,9 @@ import timeField from './forms/timeField';
 import dateField from './forms/dateField';
 import dateTimeField from './forms/dateTimeField';
 import forms from './forms/forms';
+import formsSettings from './forms/formsSettings';
+import entry from './forms/entry';
+import popups from './popups';
 
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -97,5 +100,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     dateField,
     dateTimeField,
     forms,
+    formsSettings,
+    entry,
+
+    popups,
   ],
 };

@@ -46,6 +46,104 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Popup = {
+  _id: string;
+  _type: "popup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  button?: Link;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
+  location?: "bottom-left" | "bottom-center" | "bottom-right" | "center-left" | "center" | "center-right" | "top-left" | "top-center" | "top-right";
+  delay?: number;
+  cookieId?: Slug;
+};
+
+export type Entry = {
+  _id: string;
+  _type: "entry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
+  fields?: Array<{
+    name?: string;
+    value?: string;
+    file?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      _type: "file";
+    };
+    _type: "field";
+    _key: string;
+  }>;
+  submittedAt?: string;
+};
+
+export type FormsSettings = {
+  _id: string;
+  _type: "formsSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  submissionsEmail?: string;
+  apiKey?: string;
+};
+
 export type Form = {
   _id: string;
   _type: "form";
@@ -87,41 +185,10 @@ export type Form = {
       };
       _type: "link";
       _key: string;
-    } | {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
-      };
-      _type: "file";
-      _key: string;
     }>;
     level?: number;
     _type: "block";
     _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "altImage";
-    _key: string;
-  } | ({
-    _key: string;
-  } & MerchBlock) | ({
-    _key: string;
-  } & SpecialBlock) | {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "form";
   }>;
   fields?: Array<({
     _key: string;
@@ -232,6 +299,7 @@ export type FieldOptions = {
   halfWidth?: boolean;
   required?: boolean;
   description?: string;
+  previewField?: boolean;
   adminLabel?: string;
 };
 
@@ -855,6 +923,34 @@ export type BlockContent = Array<{
   [internalGroqTypeReferenceTo]?: "form";
 }>;
 
+export type Link = {
+  _type: "link";
+  url?: string;
+  externalUrl?: string;
+  page?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "page";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "home";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "lineupPage";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "infoPage";
+  };
+  label?: string;
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -953,12 +1049,6 @@ export type Slug = {
   source?: string;
 };
 
-export type Link = {
-  _type: "link";
-  url?: string;
-  label?: string;
-};
-
 export type AltImage = {
   _type: "altImage";
   asset?: {
@@ -1029,7 +1119,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Form | DateTimeField | DateField | TimeField | FileUpload | SelectField | RadioButtons | CheckBoxes | AddressField | PhoneField | EmailField | TextArea | TextField | FieldOptions | Faq | Schedule | ScheduleItem | Artist | Connect | FooterLogo | FooterSettings | FooterSponsor | Tickets | TicketOption | Social | SiteSettings | ContactInfo | TextOnly | MerchBlock | MenuItem | SpecialBlock | BlockContent | Page | Home | InfoPage | SanityFileAsset | LineupPage | Hero | Slug | Link | AltImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Popup | Entry | FormsSettings | Form | DateTimeField | DateField | TimeField | FileUpload | SelectField | RadioButtons | CheckBoxes | AddressField | PhoneField | EmailField | TextArea | TextField | FieldOptions | Faq | Schedule | ScheduleItem | Artist | Connect | FooterLogo | FooterSettings | FooterSponsor | Tickets | TicketOption | Social | SiteSettings | ContactInfo | TextOnly | MerchBlock | MenuItem | SpecialBlock | BlockContent | Link | Page | Home | InfoPage | SanityFileAsset | LineupPage | Hero | Slug | AltImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: HEADER_QUERY
@@ -1159,11 +1249,13 @@ export type MAIN_NAV_QUERYResult = Array<{
   }> | null;
   buttonStyles?: boolean;
 }> | null;
+// Variable: HERO_FRAGMENT
+// Query: hero {      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {         hotspot,        crop,        asset-> {           metadata {            lqip          },                    _id        },        alt      }    }
+export type HERO_FRAGMENTResult = never;
 // Variable: HOME_QUERY
-// Query: *[_type == "home"][0] {    hero {      _type,      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {        ...,        asset-> {          ...,        }      }    },    content[]  }
+// Query: *[_type == "home"][0] {        hero {      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {         hotspot,        crop,        asset-> {           metadata {            lqip          },                    _id        },        alt      }    },    content[]  }
 export type HOME_QUERYResult = {
   hero: {
-    _type: "hero";
     heroButton: {
       label: string | null;
       url: string | null;
@@ -1171,32 +1263,15 @@ export type HOME_QUERYResult = {
     heroText: string | null;
     heroSubText: string | null;
     heroImage: {
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
       asset: {
+        metadata: {
+          lqip: string | null;
+        } | null;
         _id: string;
-        _type: "sanity.imageAsset";
-        _createdAt: string;
-        _updatedAt: string;
-        _rev: string;
-        originalFilename?: string;
-        label?: string;
-        title?: string;
-        description?: string;
-        altText?: string;
-        sha1hash?: string;
-        extension?: string;
-        mimeType?: string;
-        size?: number;
-        assetId?: string;
-        uploadId?: string;
-        path?: string;
-        url?: string;
-        metadata?: SanityImageMetadata;
-        source?: SanityAssetSourceData;
       } | null;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "altImage";
+      alt: string | null;
     } | null;
   } | null;
   content: Array<({
@@ -1271,12 +1346,11 @@ export type HOME_QUERYResult = {
   }> | null;
 } | null;
 // Variable: PAGE_QUERY
-// Query: *[_type == 'page' && slug.current == $slug][0] {    id,    title,    hero {      _type,      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {        ...,        asset-> {          ...,        }      }    },    subNav[],    content[]  }
+// Query: *[_type == 'page' && slug.current == $slug][0] {    id,    title,        hero {      heroButton {        label,        url      },      heroText,      heroSubText,      heroImage {         hotspot,        crop,        asset-> {           metadata {            lqip          },                    _id        },        alt      }    },    subNav[] {      ...,      link-> {        title, slug      },      subMenu[] {        ...,        link -> {          title, slug        }      }    },    content[]  }
 export type PAGE_QUERYResult = {
   id: null;
   title: string | null;
   hero: {
-    _type: "hero";
     heroButton: {
       label: string | null;
       url: string | null;
@@ -1284,37 +1358,44 @@ export type PAGE_QUERYResult = {
     heroText: string | null;
     heroSubText: string | null;
     heroImage: {
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
       asset: {
+        metadata: {
+          lqip: string | null;
+        } | null;
         _id: string;
-        _type: "sanity.imageAsset";
-        _createdAt: string;
-        _updatedAt: string;
-        _rev: string;
-        originalFilename?: string;
-        label?: string;
-        title?: string;
-        description?: string;
-        altText?: string;
-        sha1hash?: string;
-        extension?: string;
-        mimeType?: string;
-        size?: number;
-        assetId?: string;
-        uploadId?: string;
-        path?: string;
-        url?: string;
-        metadata?: SanityImageMetadata;
-        source?: SanityAssetSourceData;
       } | null;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt?: string;
-      _type: "altImage";
+      alt: string | null;
     } | null;
   } | null;
   subNav: Array<{
     _key: string;
-  } & MenuItem> | null;
+    _type: "menuItem";
+    label?: string;
+    link: {
+      title: string | null;
+      slug: Slug | null;
+    } | null;
+    anchor?: string;
+    externalUrl?: string;
+    subMenu: Array<{
+      _key: string;
+      _type: "menuItem";
+      label?: string;
+      link: {
+        title: string | null;
+        slug: Slug | null;
+      } | null;
+      anchor?: string;
+      externalUrl?: string;
+      subMenu?: Array<{
+        _key: string;
+      } & MenuItem>;
+      buttonStyles?: boolean;
+    }> | null;
+    buttonStyles?: boolean;
+  }> | null;
   content: Array<({
     _key: string;
   } & MerchBlock) | ({
@@ -1447,27 +1528,27 @@ export type INFO_QUERYResult = {
   content: BlockContent | null;
 } | null;
 // Variable: FAQS_QUERY
-// Query: *[_type == 'faq'][] {    ...,    answer[] {      ...,      markDefs[] {        ...,        'slug': url->slug.current      }    }  }
+// Query: *[_type == 'faq'][] {    _id,    _type,    _createdAt,    _updatedAt,    _rev,    question,    slug,    answer[] {      children[] {        marks,        text,        _type,        _key      },      style,      listItem,       markDefs[] {        externalUrl,        url,        _type,        _key      },      level,      _type,      _key    }  }
 export type FAQS_QUERYResult = Array<{
   _id: string;
   _type: "faq";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  question?: string;
-  slug?: Slug;
+  question: string | null;
+  slug: Slug | null;
   answer: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
+    children: Array<{
+      marks: Array<string> | null;
+      text: string | null;
       _type: "span";
       _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
+    }> | null;
+    style: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal" | null;
+    listItem: "bullet" | null;
     markDefs: Array<{
-      externalUrl?: string;
-      url?: {
+      externalUrl: string | null;
+      url: {
         _ref: string;
         _type: "reference";
         _weak?: boolean;
@@ -1487,18 +1568,17 @@ export type FAQS_QUERYResult = Array<{
         _type: "reference";
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "page";
-      };
+      } | null;
       _type: "link";
       _key: string;
-      slug: string | null;
     }> | null;
-    level?: number;
+    level: number | null;
     _type: "block";
     _key: string;
   }> | null;
 }>;
 // Variable: TICKETS_QUERY
-// Query: *[_type == 'tickets'][0] {    heading,    text,    ticketOptions[] {      _id,      title,      buyText,      description[],      image,      price    }  }
+// Query: *[_type == 'tickets'][0] {    heading,    text,    ticketOptions[] {      _key,      title,      buyText,      description[],      image,      price    }  }
 export type TICKETS_QUERYResult = {
   heading: string | null;
   text: Array<({
@@ -1572,7 +1652,7 @@ export type TICKETS_QUERYResult = {
     _key: string;
   }> | null;
   ticketOptions: Array<{
-    _id: null;
+    _key: string;
     title: string | null;
     buyText: string | null;
     description: Array<({
@@ -1740,4 +1820,569 @@ export type FOOTER_NAV_QUERYResult = Array<{
   }> | null;
   buttonStyles?: boolean;
 }> | null;
+// Variable: REFERENCE_QUERY
+// Query: *[_id == $ref][0] {    ...  }
+export type REFERENCE_QUERYResult = {
+  _id: string;
+  _type: "artist";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "altImage";
+  };
+  local?: boolean;
+  spotify?: string;
+} | {
+  _id: string;
+  _type: "connect";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heading?: string;
+  slug?: Slug;
+  text?: string;
+  menu?: Array<{
+    _key: string;
+  } & MenuItem>;
+} | {
+  _id: string;
+  _type: "entry";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
+  fields?: Array<{
+    name?: string;
+    value?: string;
+    file?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      _type: "file";
+    };
+    _type: "field";
+    _key: string;
+  }>;
+  submittedAt?: string;
+} | {
+  _id: string;
+  _type: "faq";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  question?: string;
+  slug?: Slug;
+  answer?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+} | {
+  _id: string;
+  _type: "footerSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  footerNav?: Array<{
+    _key: string;
+  } & MenuItem>;
+  footerLogos?: Array<{
+    _key: string;
+  } & FooterLogo>;
+  sponsor?: FooterSponsor;
+} | {
+  _id: string;
+  _type: "form";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  fields?: Array<({
+    _key: string;
+  } & AddressField) | ({
+    _key: string;
+  } & CheckBoxes) | ({
+    _key: string;
+  } & DateField) | ({
+    _key: string;
+  } & DateTimeField) | ({
+    _key: string;
+  } & EmailField) | ({
+    _key: string;
+  } & FileUpload) | ({
+    _key: string;
+  } & PhoneField) | ({
+    _key: string;
+  } & RadioButtons) | ({
+    _key: string;
+  } & SelectField) | ({
+    _key: string;
+  } & TextArea) | ({
+    _key: string;
+  } & TextField) | ({
+    _key: string;
+  } & TimeField)>;
+  submitText?: string;
+  successMessage?: string;
+} | {
+  _id: string;
+  _type: "formsSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  submissionsEmail?: string;
+  apiKey?: string;
+} | {
+  _id: string;
+  _type: "home";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  hero?: Hero;
+  content?: BlockContent;
+} | {
+  _id: string;
+  _type: "infoPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  content?: BlockContent;
+} | {
+  _id: string;
+  _type: "lineupPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  schedules?: Array<{
+    _key: string;
+  } & Schedule>;
+} | {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  hero?: Hero;
+  subNav?: Array<{
+    _key: string;
+  } & MenuItem>;
+  content?: BlockContent;
+} | {
+  _id: string;
+  _type: "popup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  button?: Link;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
+  location?: "bottom-center" | "bottom-left" | "bottom-right" | "center-left" | "center-right" | "center" | "top-center" | "top-left" | "top-right";
+  delay?: number;
+  cookieId?: Slug;
+} | {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
+} | {
+  _id: string;
+  _type: "sanity.imageAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  metadata?: SanityImageMetadata;
+  source?: SanityAssetSourceData;
+} | {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  siteName?: string;
+  mainMenu?: Array<{
+    _key: string;
+  } & MenuItem>;
+  headerText?: Array<({
+    _key: string;
+  } & MerchBlock) | ({
+    _key: string;
+  } & SpecialBlock) | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "form";
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "altImage";
+    _key: string;
+  } | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      _type: "file";
+      _key: string;
+    } | {
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  contact?: ContactInfo;
+} | {
+  _id: string;
+  _type: "tickets";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heading?: string;
+  ticketOptions?: Array<{
+    _key: string;
+  } & TicketOption>;
+  text?: Array<({
+    _key: string;
+  } & MerchBlock) | ({
+    _key: string;
+  } & SpecialBlock) | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    _key: string;
+    [internalGroqTypeReferenceTo]?: "form";
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "altImage";
+    _key: string;
+  } | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      _type: "file";
+      _key: string;
+    } | {
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+} | null;
+// Variable: POPUPS_QUERY
+// Query: *[_type == 'popup'][] {    ...  }
+export type POPUPS_QUERYResult = Array<{
+  _id: string;
+  _type: "popup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  button?: Link;
+  form?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "form";
+  };
+  location?: "bottom-center" | "bottom-left" | "bottom-right" | "center-left" | "center-right" | "center" | "top-center" | "top-left" | "top-right";
+  delay?: number;
+  cookieId?: Slug;
+}>;
 

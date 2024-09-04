@@ -16,7 +16,7 @@ export default async function Footer() {
           <ul className="md:flex">
             {footerNav.map((item: ItemProps) => (
               <NavItem
-                className="!font-extrabold !uppercase text-[2rem] !text-black mx-4 mb-4"
+                className="!font-extrabold !uppercase text-[2rem] !text-black mx-0 mb-4"
                 subMenuClasses="!text-black block normal-case !text-[1.6rem] leading-loose"
                 key={item._key}
                 {...item}

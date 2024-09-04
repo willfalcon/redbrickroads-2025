@@ -12,10 +12,13 @@ const config: Config = {
       white: 'white',
       purple: '#682df1',
       purple2: '#682d51',
+      green: '#306B34',
       decoOrange: '#F3DFAE',
       decoYellow: '#EEF1D1',
       decoPink: '#EEDDD1',
       link: '#0060df',
+      success: '#306B34',
+      error: '#c72030',
     },
     fontFamily: {
       sans: ['open-sans', 'sans-serif'],
@@ -33,6 +36,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
 export default config;

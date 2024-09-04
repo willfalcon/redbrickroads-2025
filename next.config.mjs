@@ -8,7 +8,16 @@ const nextConfig = {
         port: '',
         pathname: '/images/0ny3ua3p/production/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        port: '',
+        pathname: '/images/0ny3ua3p/development/**',
+      },
     ],
+  },
+  experimental: {
+    taint: true,
   },
 };
 

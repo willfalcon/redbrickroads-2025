@@ -22,7 +22,7 @@ export default function NavItem(props: ItemProps) {
   
   const { label, link, buttonStyles, anchor, externalUrl, subMenu, className, subMenuClasses } = props;
   
-  let classes = 'font-extrabold text-[2rem] uppercase text-red cursor-pointer';
+  let classes = 'font-extrabold text-[2rem] uppercase text-red cursor-pointer block';
   if (buttonStyles) {
     classes += ' bg-orange text-white py-3 px-12';
   }
@@ -62,9 +62,5 @@ export default function NavItem(props: ItemProps) {
       </span>
     );
   }
-  return (
-    <span>
-      {label}
-    </span>
-  );
+  return <span className={classNames(classes, className)}>{label}</span>;
 }

@@ -1,14 +1,16 @@
-export default {
+import { defineField, defineType } from "sanity"
+
+export default defineType({
   name: 'merchBlock',
   title: 'Merch Block',
   type: 'object',
   fields: [
-    {
+    defineField({
       name: 'heading',
       title: 'Heading',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -18,22 +20,22 @@ export default {
         source: (doc, options) => options.parent.heading,
         maxLength: 100,
       },
-    },
-    {
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'altImage',
-    },
-    {
+    }),
+    defineField({
       name: 'description',
       title: 'Description',
       type: 'text',
-    },
-    {
+    }),
+    defineField({
       name: 'link',
       title: 'Link',
       type: 'link',
-    },
+    }),
   ],
   preview: {
     select: {
@@ -41,4 +43,4 @@ export default {
       title: 'heading',
     },
   },
-};
+});

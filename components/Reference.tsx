@@ -1,14 +1,18 @@
 import { client } from "@/sanity/lib/client";
 import Form from "./forms/Form";
 import { REFERENCE_QUERY } from "@/sanity/lib/queries";
+import { PropsWithChildren } from "react";
+import File from "./File";
 
 
-export default async function Reference({_ref}: {_ref: string}) {
+export default async function Reference(props: PropsWithChildren & {_ref?: string | undefined}) {
+
+  const {_ref, children} = props;
   const referenceData = await client.fetch(REFERENCE_QUERY, {ref: _ref});
-
-  
   if (referenceData._type == 'form') {
-  
     return <Form {...referenceData} />;
   }  
+  if (referenceData._type == 'sanity.fileAsset') {
+    return <File url={referenceData.url} children={children}/>
+  }
 }

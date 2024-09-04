@@ -1,16 +1,17 @@
-import ErrorPage from '@/components/404';
+
 import Content from '@/components/Content';
 import Hero from '@/components/Hero';
 import SubNav from '@/components/SubNav';
 import { PAGE_QUERYResult } from '@/sanity.types';
-import { client } from '@/sanity/lib/client';
+import { client, sanityFetch } from '@/sanity/lib/client';
 import { PAGE_QUERY } from '@/sanity/lib/queries';
+import { notFound } from 'next/navigation';
 
 
 export default async function Page({params} : { params: { slug: string }}) {
-  const pageData = await client.fetch(PAGE_QUERY, {slug: params.slug});
+  const pageData = await sanityFetch<PAGE_QUERYResult>({query: PAGE_QUERY, params:{slug: params.slug}});
   if (!pageData) {
-    return <ErrorPage />
+    return notFound()
   }
   
   return (

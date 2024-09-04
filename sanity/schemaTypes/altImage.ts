@@ -1,4 +1,6 @@
-export default {
+import { defineField, defineType } from "sanity"
+
+export default defineType({
   name: 'altImage',
   title: 'Image',
   type: 'image',
@@ -6,13 +8,10 @@ export default {
     hotspot: true,
   },
   fields: [
-    {
+    defineField({
       name: 'alt',
       title: 'Alt Text',
       type: 'string',
-      options: {
-        isHighlighted: true,
-      },
-    },
+    }),
   ],
-};
+});

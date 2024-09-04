@@ -7,7 +7,7 @@ import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 import classNames from "classnames";
 
 type HeroType = {
-  hasSubNav?: boolean
+  hasSubNav?: boolean | null
   heroButton?: {
     label?: string
     url?: string
@@ -44,7 +44,6 @@ export default function Hero(props: HeroType) {
     return null;
   }
 
-  console.log(props)
 
   const { hasSubNav = false, heroButton, heroText, heroSubText, heroImage } = props;
   const builder = imageUrlBuilder(client);
@@ -55,7 +54,8 @@ export default function Hero(props: HeroType) {
 
   const classes = classNames('w-full h-[400px] overflow-hidden relative',{
     'md:h-[calc(100vh-140px)]': !hasSubNav,
-    'md:h-[calc(100vh-140px-63px)]': hasSubNav
+    'md:h-[calc(100vh-140px-63px)]': hasSubNav,
+    'mb-20': !hasSubNav
   });
   return (
     <div id="hero" className={classes}>

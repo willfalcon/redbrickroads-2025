@@ -1,35 +1,37 @@
-import Preview from '../components/ContentBlockPreview';
+import { SpecialBlock } from "@/sanity.types";
+import { defineField, defineType } from "sanity"
 
-export default {
+
+export default defineType({
   name: 'specialBlock',
   title: 'Content Block',
   type: 'object',
   fieldsets: [{ name: 'displayOptions', title: 'Display Options' }],
   fields: [
-    {
+    defineField({
       name: 'heading',
       title: 'Heading',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'reverse',
       title: 'Reverse Layout',
       type: 'boolean',
       fieldset: 'displayOptions',
-    },
-    {
+    }),
+    defineField({
       name: 'backgroundPattern',
       title: 'Background Pattern',
       type: 'boolean',
       fieldset: 'displayOptions',
-    },
-    {
+    }),
+    defineField({
       name: 'brickRoadBg',
       title: 'Brick Road Background',
       type: 'boolean',
       fieldset: 'displayOptions',
-    },
-    {
+    }),
+    defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
@@ -39,22 +41,22 @@ export default {
         source: (doc, options) => options.parent.heading,
         maxLength: 100,
       },
-    },
-    {
+    }),
+    defineField({
       name: 'image',
       title: 'Image',
       type: 'altImage',
-    },
-    {
+    }),
+    defineField({
       name: 'copy',
       title: 'Body',
       type: 'text',
-    },
-    {
+    }),
+    defineField({
       name: 'link',
       title: 'Button',
       type: 'link',
-    },
+    }),
   ],
   preview: {
     select: {
@@ -66,6 +68,8 @@ export default {
       mediaAsset: 'image.asset',
       // mediaMetadata: 'image.asset.metadata',
     },
-    component: Preview,
   },
-};
+  // components: {
+  //   preview: Preview
+  // }
+});

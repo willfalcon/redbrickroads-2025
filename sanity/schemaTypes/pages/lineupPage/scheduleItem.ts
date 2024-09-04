@@ -1,28 +1,30 @@
-export default {
+import { defineArrayMember, defineField, defineType } from "sanity"
+
+export default defineType({
   name: 'scheduleItem',
   title: 'Schedule Item',
   type: 'object',
   fields: [
-    {
+    defineField({
       name: 'time',
       title: 'Time',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'label',
       title: 'Label',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'subLabel',
       title: 'Sub Label',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'eventType',
       title: 'Type',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [defineArrayMember({ type: 'string' })],
       options: {
         list: [
           { title: 'Artist', value: 'artist' },
@@ -30,7 +32,7 @@ export default {
           { title: 'Info', value: 'info' },
         ],
       },
-    },
+    }),
   ],
   preview: {
     select: {
@@ -38,4 +40,4 @@ export default {
       subtitle: 'time',
     },
   },
-};
+});

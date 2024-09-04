@@ -1,14 +1,14 @@
 import classNames from "classnames";
-import { PortableText, PortableTextReactComponents } from "next-sanity";
-import { TypedObject } from "sanity";
+import { PortableText, PortableTextMarkComponentProps, PortableTextReactComponents } from "next-sanity";
+import { File, TypedObject } from "sanity";
 import SpecialBlock from "./SpecialBlock";
-import './Content.css';
+import './content-styles.css';
 import Link from "next/link";
-import Form from "./forms/Form";
 import Reference from "./Reference";
-import { SpecialBlock as SpecialBlockType } from "@/sanity.types";
+import { Link as LinkType, SpecialBlock as SpecialBlockType } from "@/sanity.types";
+import { PropsWithChildren } from "react";
 
-const components = {
+const components: Partial<PortableTextReactComponents> = {
   types: {
     specialBlock: ({ value }: { value: SpecialBlockType }) => {
       return <SpecialBlock block={value} />;
@@ -20,36 +20,37 @@ const components = {
     },
   },
   marks: {
-    link: (props) => {
+    link: (props: PortableTextMarkComponentProps<any>) => {
       const { children, value } = props;
       const { url, externalUrl, slug } = value;
       if (externalUrl) {
         return (
-          <a className="text-link underline" href={externalUrl} target="_blank" rel="noopener noreferrer">
+          <a href={externalUrl} target="_blank" rel="noopener noreferrer">
             {children}
           </a>
         );
       }
       if (url) {
         return (
-          <Link className="text-link underline" href={`/${slug}`}>
+          <Link href={`/${slug}`}>
             {children}
           </Link>
         );
       }
       return <span>{children}</span>;
     },
-    file: () => {
-      return <span></span>;
+    file: (props: PortableTextMarkComponentProps<any>) => {
+      const { value, children } = props;
+      return <Reference {...value.asset} children={children} />;
     },
   },
   list: {
-    bullet: ({ children }) => <ul className="list-disc pl-8">{children}</ul>,
-    number: ({ children }) => <ol className="list-decimal pl-8">{children}</ol>,
+    bullet: ({ children }: PropsWithChildren) => <ul>{children}</ul>,
+    number: ({ children }: PropsWithChildren) => <ol>{children}</ol>,
   },
   listItem: {
-    bullet: ({ children }) => <li className="my-2">{children}</li>,
-    number: ({ children }) => <li className="my-2">{children}</li>,
+    bullet: ({ children }: PropsWithChildren) => <li>{children}</li>,
+    number: ({ children }: PropsWithChildren) => <li>{children}</li>,
   },
 };
 
@@ -58,7 +59,7 @@ type props = {
   children: TypedObject | TypedObject[] | null | undefined
 };
 
-export default function Content({children, className}: props) {
+export default async function Content({children, className}: props) {
  
   return (
     <div className={(classNames('block-content', className))}>

@@ -4,9 +4,10 @@ import { Faq } from "@/sanity.types";
 import Content from "./Content";
 import { MutableRefObject, useEffect, useRef, useState } from "react";
 import classNames from "classnames";
+import SimpleContent from "./SimpleContent"
 
 export default function FAQ({question, answer, slug, _id}: Faq) {
-  console.log(answer)
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const [height, setHeight] = useState(0);
@@ -28,11 +29,11 @@ export default function FAQ({question, answer, slug, _id}: Faq) {
       <section className={classNames('group transition-all overflow-hidden')} style={{
         height: isExpanded ? `${height}px` : '0px'
       }} id={_id} aria-labelledby={`${_id}-label`} ref={ref}>
-        <Content>{answer}</Content>
-          <span className={classNames('h-[4px] max-w-full mx-auto bg-black opacity-25 block mb-8 transition-all origin-left scale-x-0', {
-            'scale-x-100': isExpanded
-          })}></span>
-      </section>
+        <SimpleContent>{answer}</SimpleContent>
+        <span className={classNames('h-[4px] max-w-full mx-auto bg-black opacity-25 block mb-8 transition-all origin-left scale-x-0', {
+          'scale-x-100': isExpanded
+        })}></span>
+    </section>
     </div>
   )
 }

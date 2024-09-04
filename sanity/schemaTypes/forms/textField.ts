@@ -6,15 +6,15 @@ export default defineType({
   name: 'textField',
   type: 'object',
   fields: [
-    {
+    defineField({
       title: 'Name',
       name: 'name',
       type: 'string',
-    },
-    {
+    }),
+    defineField({
       name: 'fieldOptions',
       type: 'fieldOptions',
-    },
+    }),
   ],
   preview: preview,
 });
