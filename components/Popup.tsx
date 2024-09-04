@@ -61,12 +61,12 @@ export default function Popup(props: Props) {
   }
 
   
-  let classes = 'flex justify-center items-center flex-col fixed z-50 bg-white rounded px-4 pb-6 pt-12 max-w-[400px] ';
+  let classes = 'flex justify-center items-center flex-col fixed z-50 bg-white rounded px-4 pb-6 pt-12 max-w-[calc(100vw-2rem)] md:max-w-[400px] ';
   switch(location) {
     case 'bottom-center':
-      classes += 'bottom-10';
+      classes += 'bottom-4 md:bottom-10';
     default: 
-      classes += 'bottom-10 left-10';
+      classes += 'bottom-4 md:bottom-10 left-4 md:left-10';
   }
 
   return (
