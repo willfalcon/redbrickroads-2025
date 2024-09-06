@@ -11,6 +11,7 @@ import { useFormState, useFormStatus } from "react-dom";
 
 type Props = Form & {
   additionalSubmitHandler?: () => void;
+  className?: string;
 }; 
 
 const initialState = {
@@ -19,7 +20,7 @@ const initialState = {
 };
 
 export default function Form(props: Props) {
-  const {title, description, fields, submitText, _id, additionalSubmitHandler} = props;
+  const {title, description, fields, submitText, _id, additionalSubmitHandler, className} = props;
   
 
   const [state, formAction]= useFormState(formSubmit, initialState); 
@@ -29,7 +30,7 @@ export default function Form(props: Props) {
 
   return (
     <FormContext.Provider value={{ errors }}>
-      <form action={formAction} onSubmit={additionalSubmitHandler}>
+      <form action={formAction} onSubmit={additionalSubmitHandler} className={className}>
         <h2 className="text-[3rem] md:text-[6rem] uppercase text-orange my-20">{title}</h2>
         {description && <SimpleContent className="form__description">{description}</SimpleContent>}
         <Fieldset>
