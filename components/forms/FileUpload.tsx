@@ -6,12 +6,12 @@ import { useFormContext } from "./Form";
 export default function FileUpload({name, fieldOptions}: FileUpload) {
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
-  const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
+  
   
   const { focused, handleFocus, handleBlur, setFocus } = useFocusState();
   const [fileName, setFileName] = useState<string>('');
   
-  const fieldName: string = (adminLabel ?? name) as string;
+  const fieldName: string = (fieldOptions?.adminLabel ?? name) as string;
 
   const { errors } = useFormContext();
   const error = errors ? errors[fieldName] : null;

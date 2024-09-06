@@ -200,6 +200,10 @@ export type Form = {
     _key: string;
   } & PhoneField) | ({
     _key: string;
+  } & UrlField) | ({
+    _key: string;
+  } & PasswordField) | ({
+    _key: string;
   } & AddressField) | ({
     _key: string;
   } & CheckBoxes) | ({
@@ -266,6 +270,18 @@ export type CheckBoxes = {
 
 export type AddressField = {
   _type: "addressField";
+  name?: string;
+  fieldOptions?: FieldOptions;
+};
+
+export type PasswordField = {
+  _type: "passwordField";
+  name?: string;
+  fieldOptions?: FieldOptions;
+};
+
+export type UrlField = {
+  _type: "urlField";
   name?: string;
   fieldOptions?: FieldOptions;
 };
@@ -1119,7 +1135,7 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Popup | Entry | FormsSettings | Form | DateTimeField | DateField | TimeField | FileUpload | SelectField | RadioButtons | CheckBoxes | AddressField | PhoneField | EmailField | TextArea | TextField | FieldOptions | Faq | Schedule | ScheduleItem | Artist | Connect | FooterLogo | FooterSettings | FooterSponsor | Tickets | TicketOption | Social | SiteSettings | ContactInfo | TextOnly | MerchBlock | MenuItem | SpecialBlock | BlockContent | Link | Page | Home | InfoPage | SanityFileAsset | LineupPage | Hero | Slug | AltImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Popup | Entry | FormsSettings | Form | DateTimeField | DateField | TimeField | FileUpload | SelectField | RadioButtons | CheckBoxes | AddressField | PasswordField | UrlField | PhoneField | EmailField | TextArea | TextField | FieldOptions | Faq | Schedule | ScheduleItem | Artist | Connect | FooterLogo | FooterSettings | FooterSponsor | Tickets | TicketOption | Social | SiteSettings | ContactInfo | TextOnly | MerchBlock | MenuItem | SpecialBlock | BlockContent | Link | Page | Home | InfoPage | SanityFileAsset | LineupPage | Hero | Slug | AltImage | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: HEADER_QUERY
@@ -2003,6 +2019,8 @@ export type REFERENCE_QUERYResult = {
     _key: string;
   } & FileUpload) | ({
     _key: string;
+  } & PasswordField) | ({
+    _key: string;
   } & PhoneField) | ({
     _key: string;
   } & RadioButtons) | ({
@@ -2013,7 +2031,9 @@ export type REFERENCE_QUERYResult = {
     _key: string;
   } & TextField) | ({
     _key: string;
-  } & TimeField)>;
+  } & TimeField) | ({
+    _key: string;
+  } & UrlField)>;
   submitText?: string;
   successMessage?: string;
 } | {
@@ -2385,4 +2405,84 @@ export type POPUPS_QUERYResult = Array<{
   delay?: number;
   cookieId?: Slug;
 }>;
+// Variable: FORM_QUERY
+// Query: *[_type == 'form' && _id == $id][0] {    ...  }
+export type FORM_QUERYResult = {
+  _id: string;
+  _type: "form";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      externalUrl?: string;
+      url?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "home";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "infoPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "lineupPage";
+      } | {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+  fields?: Array<({
+    _key: string;
+  } & AddressField) | ({
+    _key: string;
+  } & CheckBoxes) | ({
+    _key: string;
+  } & DateField) | ({
+    _key: string;
+  } & DateTimeField) | ({
+    _key: string;
+  } & EmailField) | ({
+    _key: string;
+  } & FileUpload) | ({
+    _key: string;
+  } & PasswordField) | ({
+    _key: string;
+  } & PhoneField) | ({
+    _key: string;
+  } & RadioButtons) | ({
+    _key: string;
+  } & SelectField) | ({
+    _key: string;
+  } & TextArea) | ({
+    _key: string;
+  } & TextField) | ({
+    _key: string;
+  } & TimeField) | ({
+    _key: string;
+  } & UrlField)>;
+  submitText?: string;
+  successMessage?: string;
+} | null;
 

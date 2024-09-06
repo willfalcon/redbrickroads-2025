@@ -10,7 +10,7 @@ import { formSubmit } from "@/app/actions";
 import { useFormState, useFormStatus } from "react-dom";
 
 type Props = Form & {
-  className: string;
+  additionalSubmitHandler?: () => void;
 }; 
 
 const initialState = {
@@ -19,17 +19,17 @@ const initialState = {
 };
 
 export default function Form(props: Props) {
-  const {title, description, fields, submitText, successMessage, _id, className } = props;
+  const {title, description, fields, submitText, _id, additionalSubmitHandler} = props;
   
-  // const hasUploads = fields?.some(field => field._type === 'fileUpload');
 
   const [state, formAction]= useFormState(formSubmit, initialState); 
 
   const {errors, message} = state;
+  console.log(state);
 
   return (
     <FormContext.Provider value={{ errors }}>
-      <form action={formAction}>
+      <form action={formAction} onSubmit={additionalSubmitHandler}>
         <h2 className="text-[3rem] md:text-[6rem] uppercase text-orange my-20">{title}</h2>
         {description && <SimpleContent className="form__description">{description}</SimpleContent>}
         <Fieldset>

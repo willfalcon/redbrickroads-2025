@@ -13,11 +13,10 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
 
   const description =
     fieldOptions && fieldOptions.description ? fieldOptions.description : false;
-  const adminLabel =
-    fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  
-  const fieldName: string = (adminLabel ?? name) as string;
 
+  
+  const fieldName: string = (fieldOptions?.adminLabel ?? name) as string;
+  
   const {errors} = useFormContext();
   const error = errors ? errors[fieldName] : null;
   
@@ -33,7 +32,7 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
         <span
           className={classNames('label-text absolute top-1/2 left-4 transition-all pointer-events-none')}
         >
-          {name}
+          {name} 
           {required && '*'}
         </span>
       <div>
@@ -47,7 +46,6 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
                 type="checkbox"
                 value={option}
                 id={`${fieldName}-${option}`}
-                required={required}
               />
               <span className="bg-transparent border border-orange block w-[1.2rem] h-[1.2rem] rounded absolute left-1 top-3 peer-checked:bg-orange" />
               <label htmlFor={`${fieldName}-${option}`} className="text-[1.4rem] p-2 pl-8 relative cursor-pointer">

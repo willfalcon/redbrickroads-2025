@@ -20,8 +20,8 @@ export async function formSubmit(
 
   const fieldErrors = form.fields.map((field: FormField) => {
     const {name, _type, fieldOptions } = field;
-    const fieldName = fieldOptions?.adminLabel ? fieldOptions?.adminLabel : name;
-    
+    const fieldName = (fieldOptions?.adminLabel ?? name);
+    console.log(formData.get('fieldName'));
     if (fieldOptions?.required && !formData.get(fieldName!)) {
       return { field: fieldName, message: `${fieldName} is required!`}
     }
@@ -40,6 +40,7 @@ export async function formSubmit(
       if (validateEmail(value as string)) return;
       return {field: fieldName, message: 'Please enter a valid email address'};
     }
+
     return;
   }).filter((e: any) => e)
 

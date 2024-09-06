@@ -8,8 +8,8 @@ export default function TextField({ name, fieldOptions, _type }: TextField | Ema
 
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
-  const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName: string = (adminLabel ?? name) as string;
+  
+  const fieldName: string = (fieldOptions?.adminLabel ?? name) as string;
 
   const { focused, handleFocus, handleBlur } = useFocusState();
   const { errors } = useFormContext();
