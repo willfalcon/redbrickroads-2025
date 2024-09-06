@@ -16,7 +16,7 @@ export default function SelectField({ name, fieldOptions, options }: SelectField
   
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName = adminLabel ? adminLabel : name;
+  const fieldName: string = (adminLabel ?? name) as string;
 
   
   const { focused, handleFocus, handleBlur } = useFocusState();
@@ -29,9 +29,7 @@ export default function SelectField({ name, fieldOptions, options }: SelectField
         <select
           className="text-input bg-transparent border-0 w-full p-4 mb-0 mt-4 text-black"
           onFocus={handleFocus}
-          // onChange={e => setSelected(e.target.value)}
-          // value={selected}
-          // {...register(fieldName!, { required })} 
+          
           required={required}
           onBlur={handleBlur}
         >

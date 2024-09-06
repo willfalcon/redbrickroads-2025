@@ -9,7 +9,7 @@ export default function TimeField({name, fieldOptions}: TimeField) {
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName = adminLabel ? adminLabel : name;
+  const fieldName: string = (adminLabel ?? name) as string;
 
   const { focused, handleFocus, handleBlur } = useFocusState();
   

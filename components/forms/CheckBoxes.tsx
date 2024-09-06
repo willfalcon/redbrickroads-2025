@@ -15,13 +15,12 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
     fieldOptions && fieldOptions.description ? fieldOptions.description : false;
   const adminLabel =
     fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName = adminLabel ? adminLabel : name;
-  // const { register, formState: {errors} } = useFormContext();
-  // const error = errors[fieldName!];
+  
+  const fieldName: string = (adminLabel ?? name) as string;
 
   const {errors} = useFormContext();
   const error = errors ? errors[fieldName] : null;
-  console.log(error);
+  
   
   return (
     <FieldWrapper options={fieldOptions}>

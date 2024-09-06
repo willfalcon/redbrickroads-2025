@@ -8,8 +8,10 @@ export default function RadioButtons({name, fieldOptions, options}: RadioButtons
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName = adminLabel ? adminLabel : name;
-  const [checked, setChecked] = useState<number | null>(null);
+  const fieldName: string = (adminLabel ?? name) as string;
+
+  // const [checked, setChecked] = useState<number | null>(null);
+  
   const { errors } = useFormContext();
   const error = errors ? errors[fieldName] : null;
   return (

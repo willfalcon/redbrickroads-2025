@@ -13,7 +13,8 @@ export default function TextArea({name, fieldOptions}: TextArea) {
       fieldOptions && fieldOptions.description ? fieldOptions.description : false;
     const adminLabel =
       fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-    const fieldName = adminLabel ? adminLabel : name;
+    const fieldName: string = (adminLabel ?? name) as string;
+    
     const { focused, handleFocus, handleBlur } = useFocusState();
 
     const { errors } = useFormContext();

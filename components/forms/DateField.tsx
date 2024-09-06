@@ -8,11 +8,13 @@ export default function DateField({name, fieldOptions}: DateField) {
   const halfWidth = fieldOptions && fieldOptions.halfWidth ? fieldOptions.halfWidth : false;
   const description = fieldOptions && fieldOptions.description ? fieldOptions.description : false;
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
-  const fieldName = adminLabel ? adminLabel : name;
 
-  const {focused, handleFocus, handleBlur} = useFocusState();
+  const fieldName: string = (adminLabel ?? name) as string;
+
   const { errors } = useFormContext();
   const error = errors ? errors[fieldName] : null;
+  
+  const {focused, handleFocus, handleBlur} = useFocusState();
 
   return (
     <div>
@@ -34,7 +36,7 @@ export default function DateField({name, fieldOptions}: DateField) {
         />
       </label>
       {description && <p className="field-description">{description}</p>}
-      {error && <p className="text-error">{errors}</p>}
+      {error && <p className="text-error">{error}</p>}
     </div>
   );
 }
