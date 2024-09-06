@@ -43,6 +43,8 @@ import forms from './forms/forms';
 import formsSettings from './forms/formsSettings';
 import entry from './forms/entry';
 import popups from './popups';
+import urlField from './forms/urlField';
+import passwordField from './forms/passwordField';
 
 
 export const schema: { types: SchemaTypeDefinition[] } = {
@@ -92,6 +94,8 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     textArea,
     emailField,
     phoneField,
+    urlField,
+    passwordField,
     addressField,
     checkBoxes,
     radioButtons,

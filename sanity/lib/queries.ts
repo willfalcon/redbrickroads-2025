@@ -224,3 +224,8 @@ export const POPUPS_QUERY = groq`
     ...
   }
 `
+export const FORM_QUERY = groq`
+  *[_type == 'form' && _id == $id][0] {
+    ...
+  }
+`

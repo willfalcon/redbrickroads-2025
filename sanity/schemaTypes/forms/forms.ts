@@ -26,6 +26,8 @@ export default defineType({
         defineArrayMember({ type: 'textArea' }),
         defineArrayMember({ type: 'emailField' }),
         defineArrayMember({ type: 'phoneField' }),
+        defineArrayMember({ type: 'urlField' }),
+        defineArrayMember({ type: 'passwordField' }),
         defineArrayMember({ type: 'addressField' }),
         defineArrayMember({ type: 'checkBoxes' }),
         defineArrayMember({ type: 'radioButtons' }),

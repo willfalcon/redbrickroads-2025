@@ -34,6 +34,16 @@ const config: Config = {
       backgroundImage: {
         'string-lights': "url('/elements-string-light.png')",
       },
+      keyframes: {
+        movingBg: {
+          '0%': { backgroundPosition: '0 0'},
+          // '50%': { 'transform': 'translateY(-50%) rotate(225deg) translateX(-66%)' },
+          '100%': { backgroundPosition: '100% 100%'},
+        },
+      },
+      animation: {
+        movingBg: 'movingBg 1.5s linear infinite'
+      }
     },
   },
   plugins: [require('@tailwindcss/typography')],

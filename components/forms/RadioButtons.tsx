@@ -1,6 +1,7 @@
 import type { RadioButtons } from "@/sanity.types";
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from "./Form";
+
 
 export default function RadioButtons({name, fieldOptions, options}: RadioButtons) {
   const required = fieldOptions && fieldOptions.required ? fieldOptions.required : false;
@@ -9,9 +10,8 @@ export default function RadioButtons({name, fieldOptions, options}: RadioButtons
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
   const fieldName = adminLabel ? adminLabel : name;
   const [checked, setChecked] = useState<number | null>(null);
-  const { register, formState: {errors} } = useFormContext();
-  const error = errors[fieldName!];
-  // const { ref } = register(fieldName!, { required });
+  const { errors } = useFormContext();
+  const error = errors ? errors[fieldName] : null;
   return (
     <div>
       <span className="label-text">
@@ -22,13 +22,11 @@ export default function RadioButtons({name, fieldOptions, options}: RadioButtons
         {options?.map((option, i) => (
           <span className="radio-button-wrapper" key={option}>
             <input
-              // onChange={() => setChecked(i)}
               className="radio-button"
               type="radio"
-              // checked={checked === i}
-              // name={fieldName}
+              name={fieldName}
               value={option}
-              {...register(fieldName!, { required })}
+              required={required}
               id={`${fieldName}-${option}`}
             />
             <label className="radio-button-option-label" htmlFor={`${fieldName}-${option}`}>
@@ -37,8 +35,8 @@ export default function RadioButtons({name, fieldOptions, options}: RadioButtons
           </span>
         ))}
       </div>
-      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
       {description && <p className="field-description">{description}</p>}
+      {error && <p className="text-error">{error}</p>}
     </div>
   );
 }

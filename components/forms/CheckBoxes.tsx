@@ -1,8 +1,8 @@
 import type { CheckBoxes } from "@/sanity.types";
 
 import { FieldWrapper, Label } from "./formUtils";
-import { useFormContext } from "react-hook-form";
 import classNames from "classnames";
+import { useFormContext } from "./Form";
 
 
 export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
@@ -16,11 +16,13 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
   const adminLabel =
     fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
   const fieldName = adminLabel ? adminLabel : name;
-  console.log(fieldName)
-  const { register, formState: {errors} } = useFormContext();
-  const error = errors[fieldName!];
+  // const { register, formState: {errors} } = useFormContext();
+  // const error = errors[fieldName!];
+
+  const {errors} = useFormContext();
+  const error = errors ? errors[fieldName] : null;
+  console.log(error);
   
- 
   return (
     <FieldWrapper options={fieldOptions}>
       <div
@@ -46,7 +48,7 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
                 type="checkbox"
                 value={option}
                 id={`${fieldName}-${option}`}
-                {...register(fieldName, { required })}
+                required={required}
               />
               <span className="bg-transparent border border-orange block w-[1.2rem] h-[1.2rem] rounded absolute left-1 top-3 peer-checked:bg-orange" />
               <label htmlFor={`${fieldName}-${option}`} className="text-[1.4rem] p-2 pl-8 relative cursor-pointer">
@@ -57,9 +59,8 @@ export default function CheckBoxes({name, fieldOptions, options}: CheckBoxes) {
         })}
       </div>
       </div>
-      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
       {description && <p className="field-description">{description}</p>}
-      {/* </Label> */}
+      {error && <p className="text-error">{error}</p>}
     </FieldWrapper>
   );
 }

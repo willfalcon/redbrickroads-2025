@@ -1,7 +1,8 @@
 import type { TextArea } from "@/sanity.types";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
 import classNames from "classnames";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from "./Form";
+
 
 export default function TextArea({name, fieldOptions}: TextArea) {
     const required =
@@ -15,10 +16,8 @@ export default function TextArea({name, fieldOptions}: TextArea) {
     const fieldName = adminLabel ? adminLabel : name;
     const { focused, handleFocus, handleBlur } = useFocusState();
 
-    const { register, formState: {errors} } = useFormContext();
-    const error = errors[fieldName!];
-    
-    const { ref, onChange } = register(fieldName!, { required });
+    const { errors } = useFormContext();
+    const error = errors ? errors[fieldName] : null;
 
     const classes = classNames('*:translate-y-0', {
       '*:top-[17px]': !focused,
@@ -34,12 +33,11 @@ export default function TextArea({name, fieldOptions}: TextArea) {
           id={fieldName}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onChange={onChange}
-          ref={ref}
+          required={required}
         />
       </Label>
-      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
       {description && <p className="field-description">{description}</p>}
+      {error && <p className="text-error">{error}</p>}
     </FieldWrapper>
   );
 }

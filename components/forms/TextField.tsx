@@ -1,7 +1,7 @@
 import type { EmailField, TextField } from "@/sanity.types";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
-import classNames from "classnames";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from "./Form";
+
 
 
 export default function TextField({ name, fieldOptions, _type }: TextField | EmailField) {
@@ -12,31 +12,37 @@ export default function TextField({ name, fieldOptions, _type }: TextField | Ema
   const fieldName = adminLabel ? adminLabel : name;
 
   const { focused, handleFocus, handleBlur } = useFocusState();
-  
-  const { register, formState: {errors} } = useFormContext();
-  const error = errors[fieldName!];
+  const { errors } = useFormContext();
+  const error = errors ? errors[fieldName] : null;
 
-  const { ref, onChange } = register(fieldName!, { required });
-
+  function getType(type: string) {
+    switch(type) {
+      case 'emailField':
+        return 'email';
+      case 'urlField':
+        return 'url';
+      case 'passwordField':
+        return 'password';
+      default:
+        return 'text';
+    }
+  }
   
   return (
     <FieldWrapper options={fieldOptions}>
       <Label name={name!} options={fieldOptions} focused={focused} htmlFor={fieldName}>
         <input
           className="text-input bg-transparent border-0 w-full p-4 mb-0 mt-4 text-black focus:outline-0"
-          type={_type === 'emailField' ? 'email' : 'text'}
+          type={getType(_type)}
           name={fieldName}
           id={fieldName}
-          onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          ref={ref}
+          required={required}
         />
       </Label>
-      {error?.type === 'required' && (
-        <p className="text-error">{fieldName || 'This field'} is required!</p>
-      )}
       {description && <p className="field-description">{description}</p>}
+      {error && <p className="text-error">{error}</p>}
     </FieldWrapper>
   );
 }

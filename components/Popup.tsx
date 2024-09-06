@@ -13,7 +13,7 @@ type Props = Popup & {
 }
 
 export default function Popup(props: Props) {
-  console.log(props)
+  
   const [visible, setVisible] = useState(false);
   const {className, location, title, text, form, cookieId} = props;
   

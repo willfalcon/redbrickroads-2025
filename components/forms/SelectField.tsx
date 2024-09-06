@@ -1,7 +1,6 @@
 import type { SelectField } from "@/sanity.types";
-import { useState } from "react";
 import { FieldWrapper, Label, useFocusState } from "./formUtils";
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from "./Form";
 
 type StateOption = {
   value: string;
@@ -19,10 +18,11 @@ export default function SelectField({ name, fieldOptions, options }: SelectField
   const adminLabel = fieldOptions && fieldOptions.adminLabel ? fieldOptions.adminLabel : false;
   const fieldName = adminLabel ? adminLabel : name;
 
-  // const [selected, setSelected] = useState<string>('');
+  
   const { focused, handleFocus, handleBlur } = useFocusState();
-  const { register, formState: {errors} } = useFormContext();
-  const error = errors[fieldName!];
+  const { errors } = useFormContext();
+  const error = errors ? errors[fieldName] : null;
+
   return (
     <FieldWrapper options={fieldOptions}>
       <Label name={name!} options={fieldOptions} focused={focused} htmlFor={fieldName}>
@@ -32,6 +32,7 @@ export default function SelectField({ name, fieldOptions, options }: SelectField
           // onChange={e => setSelected(e.target.value)}
           // value={selected}
           // {...register(fieldName!, { required })} 
+          required={required}
           onBlur={handleBlur}
         >
           <option value={''}></option>
@@ -46,8 +47,8 @@ export default function SelectField({ name, fieldOptions, options }: SelectField
           })}
         </select>
       </Label>
-      {error?.type === 'required' && <p className="text-error">{fieldName || 'This field'} is required!</p>}
       {description && <p className="field-description">{description}</p>}
+      {error && <p className="text-error">{error}</p>}
     </FieldWrapper>
   );
 }
