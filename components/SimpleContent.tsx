@@ -29,15 +29,13 @@ const components = {
 type props = {
   className?: string;
   children: TypedObject | TypedObject[] | null | undefined;
+  'data-sanity'?: string;
 };
 
-export default function SimpleContent({className, children}: props) {
-  // console.log(children)
+export default function SimpleContent({ className, children, ['data-sanity']: dataSanity }: props) {
   return (
-    <div className={classNames('block-content', className)}>
-      {children && (
-        <PortableText value={children} components={components} />
-      )}
+    <div className={classNames('block-content', className)} data-sanity={dataSanity || ''}>
+      {children && <PortableText value={children} components={components} />}
     </div>
   );
 }

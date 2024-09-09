@@ -13,6 +13,7 @@ import FileUpload from './FileUpload';
 import TimeField from './TimeField';
 import DateField from './DateField';
 import { FormField } from './types';
+import DateTimeField from './DateTimeField';
 
 export default function FieldSwitcher(field: FormField) {
   switch (field._type) {
@@ -34,9 +35,9 @@ export default function FieldSwitcher(field: FormField) {
     case 'fileUpload':
       return <FileUpload {...field} />;
     case 'timeField':
-      return <TimeField {...field} />;
     case 'dateField':
-      return <DateField {...field} />;
+    case 'dateTimeField':
+      return <DateTimeField {...field} />;
     default:
       return null;
   }

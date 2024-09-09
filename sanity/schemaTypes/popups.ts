@@ -3,9 +3,12 @@ import { randomString } from "../lib/utils";
 
 export default defineType({
   name: 'popup',
-  title: 'Popup',
+  title: 'Popups',
   type: 'document',
-  fieldsets: [{name: 'details', title: 'Details'}],
+  fieldsets: [
+    {name: 'details', title: 'Details'},
+    {name: 'scheduling', title: 'Scheduling'}
+  ],
   fields: [
     defineField({
       name: 'title',
@@ -66,6 +69,26 @@ export default defineType({
         source: () => randomString(5),
       },
       validation: rule => rule.required()
+    }),
+    defineField({
+      name: 'starts',
+      title: 'Starts',
+      type: 'datetime',
+      fieldset: 'scheduling',
+      options: {
+        dateFormat: 'MM/DD/YYYY',
+        timeFormat: 'h:mm a'
+      }
+    }),
+    defineField({
+      name: 'ends',
+      title: 'Ends',
+      type: 'datetime',
+      fieldset: 'scheduling',
+      options: {
+        dateFormat: 'MM/DD/YYYY',
+        timeFormat: 'h:mm a'
+      }
     })
   ]
 })

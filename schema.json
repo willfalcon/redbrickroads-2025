@@ -608,6 +608,20 @@
           "name": "slug"
         },
         "optional": true
+      },
+      "starts": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "ends": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
       }
     }
   },

@@ -5,21 +5,29 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { ItemProps } from './Nav';
 import { FOOTER_QUERYResult, FooterLogo } from "@/sanity.types";
+import { createDataAttribute } from "next-sanity";
 
 export default async function Footer() {
   const { footerLogos, sponsor} = await client.fetch<NonNullable<FOOTER_QUERYResult>>(FOOTER_QUERY);
   const footerNav = await client.fetch(FOOTER_NAV_QUERY);
+
+  const attrs = createDataAttribute({
+    id: 'footerSettings',
+    type: 'footerSettings',
+  });
+
   return (
     <footer className="p-4 md:flex md:justify-between md:items-center">
       {footerNav && (
-        <nav className="p-8">
+        <nav className="p-8" data-sanity={attrs('footerNav')}>
           <ul className="md:flex">
-            {footerNav.map((item: ItemProps) => (
+            {footerNav.map((item: ItemProps, index: number) => (
               <NavItem
                 className="!font-extrabold !uppercase text-[2rem] !text-black mx-0 mb-4"
                 subMenuClasses="!text-black block normal-case !text-[1.6rem] leading-loose"
                 key={item._key}
                 {...item}
+                data-sanity={attrs(`footerNav[${index}]`)}
               />
             ))}
           </ul>
@@ -27,8 +35,8 @@ export default async function Footer() {
       )}
       {footerLogos && (
         <ul className="flex justify-center items-center flex-grow">
-          {footerLogos?.map((logo: FooterLogo & { _key: string }) => (
-            <li key={logo._key} className="basis-[100px] w-[100px] mx-4 h-[100px]">
+          {footerLogos?.map((logo: FooterLogo & { _key: string }, index: number) => (
+            <li key={logo._key} className="basis-[100px] w-[100px] mx-4 h-[100px]" data-sanity={attrs(`footerLogos[${index}]`)}>
               {logo.logo &&
                 (logo.link ? (
                   <a className="block h-full w-full relative" href={logo.link} target="_blank" aria-label={logo.label}>

@@ -4,6 +4,7 @@ import PageTitle from "@/components/PageTite";
 import { Faq as FaqType, FAQS_QUERYResult, INFO_QUERYResult } from "@/sanity.types"
 import { client } from "@/sanity/lib/client"
 import { FAQS_QUERY, INFO_QUERY } from "@/sanity/lib/queries"
+import { draftMode } from "next/headers";
 
 export default async function InfoPage() {
   const pageData = await client.fetch<INFO_QUERYResult>(INFO_QUERY);
@@ -15,7 +16,7 @@ export default async function InfoPage() {
       {pageData?.content && <Content className="p-4">{pageData.content}</Content>}
       <div className="p-4">
         {faqs.map(faq => (
-          <FAQ key={faq._id} {...faq} />
+          <FAQ key={faq._id} {...faq} draftMode={!!draftMode()}/>
         ))}
       </div>
     </div>

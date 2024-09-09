@@ -47,13 +47,14 @@ export function FieldWrapper({ options, children }: FieldWrapperProps) {
 }
 
 type LabelProps = PropsWithChildren & {
-  className?: string,
-  options?: FieldOptions,
-  name: string,
-  focused: boolean,
-  htmlFor?: string
-}
-export function Label({className, options, name, children, focused, htmlFor } : LabelProps) {
+  className?: string;
+  options?: FieldOptions;
+  name: string;
+  focused: boolean;
+  htmlFor?: string;
+  forceActiveLabel?: boolean
+};
+export function Label({ className, options, name, children, focused, htmlFor, forceActiveLabel = false}: LabelProps) {
   const halfWidth = options && options.halfWidth ? options.halfWidth : false;
   const required = options && options.required ? options.required : false;
   return (
@@ -68,12 +69,14 @@ export function Label({className, options, name, children, focused, htmlFor } : 
       })}
       htmlFor={htmlFor || undefined}
     >
-      <span className={classNames("label-text absolute top-1/2 left-4 transition-all pointer-events-none", {
-        '-translate-y-1/2': !focused,
-        'translate-y-[-140%]': focused,
-        'text-[1.6rem]': !focused,
-        'text-[1.2rem]': focused
-      })}>
+      <span
+        className={classNames('label-text absolute top-1/2 left-4 transition-all pointer-events-none', {
+          '-translate-y-1/2': !focused && !forceActiveLabel,
+          'translate-y-[-140%]': focused || forceActiveLabel,
+          'text-[1.6rem]': !focused && !forceActiveLabel,
+          'text-[1.2rem]': focused || forceActiveLabel,
+        })}
+      >
         {name}
         {required && '*'}
       </span>

@@ -11,7 +11,7 @@ import Footer from "@/components/Footer";
 import Popup from "@/components/Popup";
 import { client } from "@/sanity/lib/client";
 import { POPUPS_QUERY } from "@/sanity/lib/queries";
-import { POPUPS_QUERYResult } from "@/sanity.types";
+import { Popup as PopupType, POPUPS_QUERYResult } from "@/sanity.types";
 
 
 export const metadata: Metadata = {
@@ -24,7 +24,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const popups = await client.fetch<POPUPS_QUERYResult>(POPUPS_QUERY);
+  
+  const popups = await getPopups();
   
   return (
     <html lang="en" style={{ fontSize: '10px', lineHeight: '1.15' }}>
@@ -44,10 +45,28 @@ export default async function RootLayout({
         <Tickets />
         <Connect />
         <Footer />
-        {popups.map(popup => (
+        {popups.map((popup) => (
           <Popup {...popup} key={popup._id} />
         ))}
       </body>
     </html>
   );
+}
+
+async function getPopups(): Promise<POPUPS_QUERYResult> {
+  const popups = await client.fetch<POPUPS_QUERYResult>(POPUPS_QUERY);
+  const filteredPopups = popups.filter(popup => {
+    const now = new Date();
+    if (popup.starts) {
+      const starts = new Date(popup.starts);
+      if (starts > now) return false;
+    }
+    if (popup.ends) {
+      const ends = new Date(popup.ends);
+      if (ends <= now) return false;
+    }
+    return true;
+  });
+
+  return filteredPopups;
 }

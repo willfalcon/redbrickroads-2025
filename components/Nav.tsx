@@ -5,6 +5,7 @@ import NavToggler from "./NavToggler";
 import { SetStateAction, useState } from 'react';
 
 import { MAIN_NAV_QUERYResult, MenuItem } from "@/sanity.types";
+import { createDataAttribute } from "next-sanity";
 
 export type ItemProps = MenuItem & {
   _key?: string;
@@ -33,12 +34,18 @@ export default function Nav({ mainMenu }: NavProps) {
   if (!navOpen) {
     navClasses += ' translate-y-[-150%]'
   }
+
+  const attrs = createDataAttribute({
+    id: 'siteSettings',
+    type: 'siteSettings',
+  });
+
   return (
     <>
       <NavToggler navOpen={navOpen} toggleNav={toggleNav} />
       <nav className={navClasses}>
-        {mainMenu.map(item => (
-          <NavItem key={item._key} {...item} />
+        {mainMenu.map((item, index: number) => (
+          <NavItem key={item._key} {...item} data-sanity={attrs(`mainMenu[${index}]`)} />
         ))}
       </nav>
     </>

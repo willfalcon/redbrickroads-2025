@@ -56,13 +56,14 @@ const components: Partial<PortableTextReactComponents> = {
 
 type props = {
   className?: string;
-  children: TypedObject | TypedObject[] | null | undefined
+  children: TypedObject | TypedObject[] | null | undefined;
+  'data-sanity'?: string
 };
 
-export default async function Content({children, className}: props) {
+export default async function Content({ children, className, ['data-sanity']: dataSanity }: props) {
  
   return (
-    <div className={(classNames('block-content', className))}>
+    <div className={(classNames('block-content', className))} data-sanity={dataSanity || ''}>
       {children && (
         <PortableText value={children} components={components} />
       )}

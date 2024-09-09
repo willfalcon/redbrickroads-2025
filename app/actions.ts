@@ -21,7 +21,7 @@ export async function formSubmit(
   const fieldErrors = form.fields.map((field: FormField) => {
     const {name, _type, fieldOptions } = field;
     const fieldName = (fieldOptions?.adminLabel ?? name);
-    console.log(formData.get('fieldName'));
+  
     if (fieldOptions?.required && !formData.get(fieldName!)) {
       return { field: fieldName, message: `${fieldName} is required!`}
     }
@@ -39,6 +39,13 @@ export async function formSubmit(
       if (!value) return;
       if (validateEmail(value as string)) return;
       return {field: fieldName, message: 'Please enter a valid email address'};
+    }
+
+    if (_type === 'dateField' ) {
+      const value = formData.get(fieldName!);
+      const date = Date.parse(value as string);
+      if (!isNaN(date)) return 
+      return {field: fieldName, message: 'Please enter a valid date'}
     }
 
     return;
@@ -98,13 +105,13 @@ export async function formSubmit(
   };
 
   try {
-    const res = await tokenClient.create(entry, { autoGenerateArrayKeys: true });
+    await tokenClient.create(entry, { autoGenerateArrayKeys: true });
     console.log('success');
-    return {message: form.successMessage, errors: null};
+    return {message: form.successMessage || 'Success!', errors: null};
     
   } catch(err: any) {
     console.log('submit error: ', err);
-    return { message: 'Somthing went wrong. Try again later!', error: err.details}
+    return { message: 'Something went wrong. Try again later!', error: err.details}
   }
 
 }

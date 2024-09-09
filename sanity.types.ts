@@ -102,6 +102,8 @@ export type Popup = {
   location?: "bottom-left" | "bottom-center" | "bottom-right" | "center-left" | "center" | "center-right" | "top-left" | "top-center" | "top-right";
   delay?: number;
   cookieId?: Slug;
+  starts?: string;
+  ends?: string;
 };
 
 export type Entry = {
@@ -2143,6 +2145,8 @@ export type REFERENCE_QUERYResult = {
   location?: "bottom-center" | "bottom-left" | "bottom-right" | "center-left" | "center-right" | "center" | "top-center" | "top-left" | "top-right";
   delay?: number;
   cookieId?: Slug;
+  starts?: string;
+  ends?: string;
 } | {
   _id: string;
   _type: "sanity.fileAsset";
@@ -2404,6 +2408,8 @@ export type POPUPS_QUERYResult = Array<{
   location?: "bottom-center" | "bottom-left" | "bottom-right" | "center-left" | "center-right" | "center" | "top-center" | "top-left" | "top-right";
   delay?: number;
   cookieId?: Slug;
+  starts?: string;
+  ends?: string;
 }>;
 // Variable: FORM_QUERY
 // Query: *[_type == 'form' && _id == $id][0] {    ...  }
